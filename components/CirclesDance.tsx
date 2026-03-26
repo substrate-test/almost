@@ -28,6 +28,7 @@ export default function CirclesDance({
   useEffect(() => {
     const cv  = canvasRef.current;
     if (!cv) return;
+    const cvEl = cv as HTMLCanvasElement;
     const ctx = cv.getContext('2d');
     if (!ctx) return;
 
@@ -85,7 +86,7 @@ export default function CirclesDance({
       const blurScale = R / 48;
       const blur = Math.min(7 * blurScale, (3.8 + rawBlur * 1.6 + proximity * 1.4 + grav * 1.4) * blurScale);
 
-      cv.style.filter = `blur(${blur.toFixed(2)}px)`;
+      cvEl.style.filter = `blur(${blur.toFixed(2)}px)`;
 
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = colour;

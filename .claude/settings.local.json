@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(export:*)",
+      "mcp__figma__get_design_context"
+    ]
+  }
+}

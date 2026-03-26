@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
-import LavaBackground from '@/components/LavaBackground'
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
 import type { Venue } from '@/types'
 import { VENUES, liveNoteCounts, expiringVenueIds, minMsLeftForVenue, formatShortCountdown } from '@/lib/data'
@@ -111,10 +110,8 @@ export default function BrowseVenueScreen({ onBack, onNext }: Props) {
   const onMapLoad = useCallback((map: google.maps.Map) => { mapRef.current = map }, [])
 
   return (
-    <div className="relative h-full animate-screen-in overflow-hidden">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black/75" />
-      <div className="relative flex flex-col h-full">
+    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full">
       {/* Header */}
       <div className="px-6">
         <div className="flex items-center gap-4 pt-[48px] pb-[60px]">

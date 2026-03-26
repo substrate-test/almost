@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import LavaBackground from '@/components/LavaBackground'
 
 const TEXTS = [
   'For the ones who almost found each other.',
@@ -29,20 +30,15 @@ export default function LandingScreen({ onNext }: { onNext: () => void }) {
 
   return (
     <div className="relative flex flex-col h-full bg-almost-bg overflow-hidden">
-      {/* Full-bleed background photo */}
-      <img
-        src="/Background6.png"
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover object-center z-0"
-      />
+      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
 
-      {/* 20% black overlay */}
+      {/* overlay */}
       <div className="absolute inset-0 bg-black/30 z-10" />
 
       {/* Logo + text — dead center */}
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-8 z-20">
         <img
-          src="/Logo New.svg"
+          src="/AlmostLogoWhite.svg"
           alt="almost"
           className="w-[86%] max-w-[355px]"
           style={{ opacity: logoVisible ? 1 : 0, transition: 'opacity 1s ease' }}
@@ -68,7 +64,7 @@ export default function LandingScreen({ onNext }: { onNext: () => void }) {
           {ctaVisible && (
             <button
               onClick={onNext}
-              className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center hover:opacity-90 active:opacity-80 animate-fade-in"
+              className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center hover:opacity-90 active:opacity-80 animate-fade-in rounded-full"
             >
               Find your connection
             </button>

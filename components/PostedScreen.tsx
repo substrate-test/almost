@@ -2,7 +2,6 @@
 
 import type { MomentData } from '@/types'
 import { formatDate } from '@/lib/data'
-import LavaBackground from '@/components/LavaBackground'
 
 interface Props {
   data: MomentData
@@ -14,11 +13,8 @@ export default function PostedScreen({ data, onViewNote, onRestart }: Props) {
   const noteText = data.text || ''
 
   return (
-    <div className="relative h-full animate-screen-in overflow-hidden">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black/75" />
-
-      <div className="relative flex flex-col h-full px-6">
+    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full px-6">
         {/* Header */}
         <div className="pt-[48px] pb-[60px]">
           <p className="font-mono text-almost-pink text-xs font-medium tracking-widest uppercase">

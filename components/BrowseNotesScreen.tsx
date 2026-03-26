@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import type { Venue, Note } from '@/types'
 import { notesForVenue, formatCountdown, formatDate, msLeft } from '@/lib/data'
-import LavaBackground from '@/components/LavaBackground'
 
 interface Props {
   venue: Venue
@@ -25,10 +24,8 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
 
   if (notes.length === 0) {
     return (
-      <div className="relative h-full animate-screen-in overflow-hidden">
-        <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-        <div className="absolute inset-0 bg-black/75" />
-        <div className="relative flex flex-col h-full px-6">
+      <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+        <div className="flex flex-col h-full px-6">
         <div className="pt-[48px] pb-[60px] flex items-center">
           <button onClick={onBack} className="flex items-center gap-1.5 text-white font-sans text-xs font-medium tracking-widest uppercase transition-opacity hover:opacity-70">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -48,8 +45,8 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
             Go back
           </button>
         </div>
-        </div>
       </div>
+    </div>
     )
   }
 
@@ -58,10 +55,8 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
   const isExpiringSoon = remaining < 2 * 3600 * 1000
 
   return (
-    <div className="relative h-full animate-screen-in overflow-hidden">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black/75" />
-      <div className="relative flex flex-col h-full">
+    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full">
       {/* Header */}
       <div className="px-6 pt-[48px] pb-6 flex items-center justify-between">
         <button onClick={onBack} className="flex items-center gap-1.5 text-white font-sans text-xs font-medium tracking-widest uppercase transition-opacity hover:opacity-70">

@@ -14,6 +14,7 @@ import BrowseVenueScreen from '@/components/BrowseVenueScreen'
 import BrowseNotesScreen from '@/components/BrowseNotesScreen'
 import BrowseRespondScreen from '@/components/BrowseRespondScreen'
 import type { MomentData, Screen, Venue, Note } from '@/types'
+import CirclesDance from '@/components/CirclesDance'
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('landing')
@@ -38,7 +39,7 @@ export default function App() {
             className="absolute top-[56px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 p-2 transition-opacity hover:opacity-70 active:opacity-50"
             aria-label="Back to start"
           >
-            <img src="/Stars New.svg" alt="" className="h-5 w-auto" />
+            <CirclesDance width={80} height={32} radius={10} />
           </button>
         )}
 

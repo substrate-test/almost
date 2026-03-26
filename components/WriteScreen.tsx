@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react'
 import type { Venue } from '@/types'
 import { formatDate } from '@/lib/data'
-import LavaBackground from '@/components/LavaBackground'
 
 const MAX_CHARS = 280
 
@@ -28,11 +27,8 @@ export default function WriteScreen({ venue, datetime, onBack, onNext }: Props) 
   const canSubmit = text.trim().length > 0 && !isOver
 
   return (
-    <div className="relative h-full animate-screen-in overflow-hidden">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black/75" />
-
-      <div className="relative flex flex-col h-full px-6">
+    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full px-6">
         {/* Header */}
         <div className="flex items-center gap-4 pt-[48px] pb-8">
           <button

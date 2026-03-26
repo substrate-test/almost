@@ -1,6 +1,5 @@
 'use client'
 
-import LavaBackground from '@/components/LavaBackground'
 
 const STEPS = {
   leave: [
@@ -25,11 +24,8 @@ export default function OnboardingScreen({ mode, onBack, onDone }: Props) {
   const steps = STEPS[mode]
 
   return (
-    <div className="relative flex flex-col h-full overflow-hidden animate-screen-in">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black/75" />
-      {/* Content */}
-      <div className="relative flex flex-col h-full px-8">
+    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full px-8">
         {/* Back */}
         <div className="pt-[48px] pb-[60px] flex items-center">
           <button

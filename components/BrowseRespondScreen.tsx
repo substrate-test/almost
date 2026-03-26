@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import LavaBackground from '@/components/LavaBackground'
 import type { Note } from '@/types'
 import { formatDate, msLeft, formatCountdown } from '@/lib/data'
 
@@ -27,10 +26,8 @@ export default function BrowseRespondScreen({ note, onBack, onSent }: Props) {
   const canSend = text.trim().length > 0 && remaining >= 0
 
   return (
-    <div className="relative h-full animate-screen-in overflow-hidden">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black/75" />
-      <div className="relative flex flex-col h-full px-6">
+    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full px-6">
       {/* Header */}
       <div className="pt-[48px] pb-[60px] flex items-center">
         <button

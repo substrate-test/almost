@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import LavaBackground from '@/components/LavaBackground'
 
 interface Props {
   onBack: () => void
@@ -20,11 +19,8 @@ export default function AuthScreen({ onBack, onDone, title = 'One last step.', d
   const canContinue = value.trim().length > 0
 
   return (
-    <div className="relative h-full animate-screen-in overflow-hidden">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
-      <div className="absolute inset-0 bg-black/75" />
-
-      <div className="relative flex flex-col h-full px-6">
+    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full px-6">
         {/* Header */}
         <div className="pt-[48px] pb-[60px] flex items-center">
           <button

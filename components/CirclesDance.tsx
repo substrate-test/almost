@@ -29,7 +29,7 @@ export default function CirclesDance({
     const cv  = canvasRef.current;
     if (!cv) return;
     const cvEl = cv as HTMLCanvasElement;
-    const ctx = cv.getContext('2d');
+    const ctx = cv.getContext('2d') as CanvasRenderingContext2D;
     if (!ctx) return;
 
     const R    = radius;

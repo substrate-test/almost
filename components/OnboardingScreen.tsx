@@ -35,7 +35,7 @@ export default function OnboardingScreen({ mode, onBack, onDone }: Props) {
   const steps = STEPS[mode]
 
   return (
-    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
+    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#bcbcbc' }}>
       <AnimatedBlobs />
 
       <div className="relative z-10 flex flex-col h-full px-[calc(8.33%+2px)]">

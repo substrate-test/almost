@@ -90,3 +90,8 @@ input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
+
+@keyframes orb-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.88); opacity: 0.65; }
+  50%       { transform: translate(-50%, -50%) scale(1.14); opacity: 1; }
+}

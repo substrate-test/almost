@@ -48,7 +48,6 @@ void main() {
 
   vec3 col = mix(bg, mid, t1);
   col = mix(col, hot, t2);
-  col += hot * smoothstep(lo * 0.15, lo * 0.5, field) * 0.18;
 
   gl_FragColor = vec4(col, 1.0);
 }

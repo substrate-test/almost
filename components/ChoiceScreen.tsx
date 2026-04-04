@@ -32,7 +32,7 @@ function Card({ title, body, onClick }: { title: string; body: string; onClick: 
 
 export default function ChoiceScreen({ onBack, onLeave, onFind, onLook }: Props) {
   return (
-    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
+    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#bcbcbc' }}>
       <AnimatedBlobs />
 
       <div className="relative z-10 flex flex-col h-full px-[calc(8.33%+2px)]">

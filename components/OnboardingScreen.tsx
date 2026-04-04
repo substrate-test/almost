@@ -1,7 +1,5 @@
 'use client'
 
-import AnimatedBlobs from '@/components/AnimatedBlobs'
-
 const STEPS = {
   leave: [
     { heading: 'Pick the place', body: 'Choose the venue where it happened.' },
@@ -35,8 +33,8 @@ export default function OnboardingScreen({ mode, onBack, onDone }: Props) {
   const steps = STEPS[mode]
 
   return (
-    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#bcbcbc' }}>
-      <AnimatedBlobs />
+    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
+      <img src="/Orbs1.svg" alt="" aria-hidden="true" className="absolute pointer-events-none" style={{ top: '4%', left: '50%', transform: 'translateX(-50%)', width: 308, height: 303 }} />
 
       <div className="relative z-10 flex flex-col h-full px-[calc(8.33%+2px)]">
 

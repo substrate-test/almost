@@ -10,41 +10,40 @@ interface Props {
 
 export default function PostedScreen({ data, onViewNote, onRestart }: Props) {
   return (
-    <div className="relative flex flex-col h-full overflow-hidden animate-screen-in" style={{ background: '#bcbcbc' }}>
+    <div className="relative flex flex-col h-full overflow-hidden animate-screen-in" style={{ background: '#f7f5f6' }}>
 
-      {/* Pulsating orb */}
+      {/* Pulsating orb — centred */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '42%',
+          top: '50%',
           left: '50%',
-          width: 420,
-          height: 420,
+          width: 480,
+          height: 480,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(254,1,56,0.95) 0%, rgba(254,1,56,0.4) 45%, rgba(254,1,56,0) 72%)',
-          filter: 'blur(18px)',
-          animation: 'orb-pulse 2.6s ease-in-out infinite',
+          background: 'radial-gradient(circle, rgba(254,1,56,1) 0%, rgba(254,1,56,0.7) 38%, rgba(254,1,56,0.15) 65%, rgba(254,1,56,0) 75%)',
+          filter: 'blur(12px)',
+          animation: 'orb-pulse 2s ease-in-out infinite',
           pointerEvents: 'none',
+          transform: 'translate(-50%, -50%)',
         }}
       />
 
       <div className="relative z-10 flex flex-col h-full px-6">
-        {/* Header */}
-        <div className="pt-[48px] pb-[60px]">
-          <p className="font-sans text-[#2c2c2c] text-[11px] tracking-widest uppercase opacity-60">
+
+        {/* Vertically centred text */}
+        <div className="flex-1 flex flex-col items-center justify-center text-center">
+          <p className="font-sans text-[#2c2c2c] text-[11px] tracking-widest uppercase opacity-60 mb-4">
             Your note is live
           </p>
+          <h1 className="font-mono text-[#2c2c2c] leading-tight mb-3" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+            It&apos;s out there!
+          </h1>
+          <p className="font-sans text-[#3a3a3a] text-[16px] leading-[1.2]">
+            If they were there and they&apos;re looking, they&apos;ll find it.
+          </p>
         </div>
-
-        <h1 className="font-mono text-[#2c2c2c] leading-tight mb-2" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
-          It&apos;s out there.
-        </h1>
-        <p className="font-sans text-[#3a3a3a] text-[16px] leading-[1.2] mb-6">
-          If they were there and they&apos;re looking, they&apos;ll find it.
-        </p>
-
-        <div className="flex-1" />
 
         {/* Actions */}
         <div className="pb-8 space-y-3">

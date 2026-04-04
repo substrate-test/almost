@@ -1,7 +1,5 @@
 'use client'
 
-import AnimatedBlobs from '@/components/AnimatedBlobs'
-
 interface Props {
   onBack: () => void
   onLeave: () => void
@@ -32,8 +30,8 @@ function Card({ title, body, onClick }: { title: string; body: string; onClick: 
 
 export default function ChoiceScreen({ onBack, onLeave, onFind, onLook }: Props) {
   return (
-    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#bcbcbc' }}>
-      <AnimatedBlobs />
+    <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
+      <img src="/Orbs2.svg" alt="" aria-hidden="true" className="absolute pointer-events-none" style={{ top: '4%', left: '50%', transform: 'translateX(-50%)', width: 388, height: 364 }} />
 
       <div className="relative z-10 flex flex-col h-full px-[calc(8.33%+2px)]">
 

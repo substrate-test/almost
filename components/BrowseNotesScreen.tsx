@@ -24,24 +24,25 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
 
   if (notes.length === 0) {
     return (
-      <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+      <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
         <div className="flex flex-col h-full px-6">
         <div className="pt-[48px] pb-[60px] flex items-center">
-          <button onClick={onBack} className="flex items-center gap-1.5 text-white font-sans text-xs font-medium tracking-widest uppercase transition-opacity hover:opacity-70">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Back
+          <button
+            onClick={onBack}
+            className="flex items-center gap-3 transition-opacity hover:opacity-70"
+          >
+            <img src="/Back icon.svg" alt="" width={20} height={11} />
+            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
           </button>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center">
-          <p className="font-mono text-almost-text text-[22px]">No notes here yet.</p>
-          <p className="font-mono text-almost-secondary text-sm max-w-[260px]">
+          <p className="font-sans text-[#2c2c2c] text-[22px]">No notes here yet.</p>
+          <p className="font-sans text-[#5d5d5d] text-[16px] leading-[1.2] max-w-[260px]">
             Nothing live at {venue.name} right now. Check back later — or be the first to leave one.
           </p>
         </div>
         <div className="pb-8">
-          <button onClick={onBack} className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center transition-opacity hover:opacity-90 active:opacity-80">
+          <button onClick={onBack} className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full">
             Go back
           </button>
         </div>
@@ -55,46 +56,41 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
   const isExpiringSoon = remaining < 2 * 3600 * 1000
 
   return (
-    <div className="flex flex-col h-full animate-screen-in bg-almost-bg">
+    <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
       <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="px-6 pt-[48px] pb-6 flex items-center justify-between">
-        <button onClick={onBack} className="flex items-center gap-1.5 text-white font-sans text-xs font-medium tracking-widest uppercase transition-opacity hover:opacity-70">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Back
+      <div className="px-6 pt-[48px] pb-4 flex items-center justify-between">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-3 transition-opacity hover:opacity-70"
+        >
+          <img src="/Back icon.svg" alt="" width={20} height={11} />
+          <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
         </button>
-        <span className="font-mono text-almost-muted text-xs font-medium tracking-widest uppercase">
-          {index + 1} of {notes.length}
-        </span>
       </div>
 
-      {/* Note card — full screen */}
-      <div className="flex-1 mx-6 flex flex-col overflow-hidden"
-        style={{
-          backgroundColor: '#141414',
-          backgroundImage: `
-            repeating-linear-gradient(to right, transparent, transparent 34px, rgba(255,255,255,0.06) 34px, rgba(255,255,255,0.06) 35px),
-            repeating-linear-gradient(to bottom, transparent, transparent 34px, rgba(255,255,255,0.06) 34px, rgba(255,255,255,0.06) 35px)
-          `,
-        }}
-      >
-        <div className="flex-1 px-6 pt-6 pb-4 overflow-y-auto">
-          <p className="font-sans text-almost-text text-[20px] leading-[1.75] whitespace-pre-wrap">
-            &ldquo;{note.text}&rdquo;
+      {/* Venue heading */}
+      <div className="px-6 pb-6">
+        <h1 className="font-mono text-[#2c2c2c] leading-tight" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+          {venue.name}
+        </h1>
+      </div>
+
+      {/* Note card */}
+      <div className="flex-1 mx-6 bg-white rounded-xl p-4 flex flex-col justify-between overflow-hidden">
+        <div className="flex-1 overflow-y-auto">
+          <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
+            {note.text}
           </p>
         </div>
-
-        {/* Chips */}
-        <div className="px-6 pb-5 flex items-center gap-1.5 min-w-0">
-          <span className="bg-black/50 px-2.5 py-[5px] font-mono text-[11px] text-white/70 truncate min-w-0">
-            {note.venue.name}
+        <div className="flex items-center gap-1.5 pt-3 min-w-0">
+          <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
+            {venue.name}
           </span>
-          <span className="bg-black/50 px-2.5 py-[5px] font-mono text-[11px] text-white/70 shrink-0">
+          <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] shrink-0">
             {formatDate(note.datetime)}
           </span>
-          <span className={`bg-black/50 px-2.5 py-[5px] font-mono text-[11px] shrink-0 ml-auto ${isExpiringSoon ? 'text-almost-pink' : 'text-almost-pink/80'}`}>
+          <span className={`font-sans text-[12px] shrink-0 ml-auto tabular-nums ${remaining < 3600000 ? 'text-almost-pink' : 'text-[#FE0155]'}`}>
             {formatCountdown(remaining)}
           </span>
         </div>
@@ -102,28 +98,37 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
 
       {/* Navigation + CTA */}
       <div className="px-6 pb-8 pt-4 flex flex-col gap-3">
-        {/* Prev / Next */}
-        {notes.length > 1 && (
-          <div className="flex gap-2">
-            <button
-              onClick={() => setIndex(i => Math.max(0, i - 1))}
-              disabled={index === 0}
-              className="flex-1 py-[15px] border border-almost-border font-mono text-[15px] text-center text-almost-secondary transition-all disabled:opacity-25 hover:border-almost-border/60"
-            >
-              ←
-            </button>
-            <button
-              onClick={() => setIndex(i => Math.min(notes.length - 1, i + 1))}
-              disabled={index === notes.length - 1}
-              className="flex-1 py-[15px] border border-almost-border font-mono text-[15px] text-center text-almost-secondary transition-all disabled:opacity-25 hover:border-almost-border/60"
-            >
-              →
-            </button>
-          </div>
-        )}
+        {/* Pagination + arrows */}
+        <div className="flex items-center justify-between mb-3">
+          <span className="font-sans text-[#7b7b7b] text-[15px]">
+            Note {index + 1} of {notes.length}
+          </span>
+          {notes.length > 1 && (
+            <div className="flex gap-2">
+              <button
+                onClick={() => setIndex(i => Math.max(0, i - 1))}
+                disabled={index === 0}
+                className="w-9 h-9 flex items-center justify-center bg-white border border-[#e0e0e0] rounded-lg text-[#5d5d5d] transition-all disabled:opacity-25 hover:border-[#d0d0d0]"
+              >
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                  <path d="M16 10H4M4 10L9 5M4 10L9 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setIndex(i => Math.min(notes.length - 1, i + 1))}
+                disabled={index === notes.length - 1}
+                className="w-9 h-9 flex items-center justify-center bg-white border border-[#e0e0e0] rounded-lg text-[#5d5d5d] transition-all disabled:opacity-25 hover:border-[#d0d0d0]"
+              >
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
         <button
           onClick={() => onRespond(note)}
-          className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center transition-opacity hover:opacity-90 active:opacity-80"
+          className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
         >
           This is me — make a move
         </button>

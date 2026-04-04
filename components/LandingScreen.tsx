@@ -3,70 +3,60 @@
 import { useState, useEffect } from 'react'
 import LavaBackground from '@/components/LavaBackground'
 
-const TEXTS = [
-  'For the ones who almost found each other.',
-  'No profiles. No photos.\nJust real chemistry.',
-]
-
 export default function LandingScreen({ onNext }: { onNext: () => void }) {
-  const [logoVisible, setLogoVisible]   = useState(false)
-  const [textIndex, setTextIndex]       = useState(0)
-  const [textVisible, setTextVisible]   = useState(false)
-  const [spinnerVisible, setSpinnerVisible] = useState(false)
-  const [ctaVisible, setCtaVisible]     = useState(false)
+  const [logoVisible, setLogoVisible] = useState(false)
+  const [textIndex, setTextIndex] = useState(0)
+  const [textVisible, setTextVisible] = useState(false)
+  const [ctaVisible, setCtaVisible] = useState(false)
 
   useEffect(() => {
-    const t1 = setTimeout(() => setLogoVisible(true),    300)   // logo fades in
-    const t2 = setTimeout(() => setTextVisible(true),    1400)  // first text fades in
-    const t3 = setTimeout(() => setTextVisible(false),   3500)  // first text fades out
-    const t4 = setTimeout(() => { setTextIndex(1); setTextVisible(true) }, 4600) // second text fades in
-    const t5 = setTimeout(() => setSpinnerVisible(true), 6200)  // spinner appears
-    const t6 = setTimeout(() => { setSpinnerVisible(false); setCtaVisible(true) }, 8000) // CTA loads
-    return () => {
-      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3)
-      clearTimeout(t4); clearTimeout(t5); clearTimeout(t6)
-    }
+    const t1 = setTimeout(() => setLogoVisible(true), 400)
+    const t2 = setTimeout(() => setTextVisible(true), 1000)
+    const t3 = setTimeout(() => setTextVisible(false), 3500)
+    const t4 = setTimeout(() => { setTextIndex(1); setTextVisible(true) }, 4500)
+    const t5 = setTimeout(() => setCtaVisible(true), 5500)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5) }
   }, [])
 
   return (
-    <div className="relative flex flex-col h-full bg-almost-bg overflow-hidden">
-      <LavaBackground blobCount={2} speed={0.6} threshold={0.8} className="absolute inset-0 w-full h-full" />
+    <div className="relative flex flex-col h-full overflow-hidden" style={{ background: '#bcbcbc' }}>
+      <LavaBackground blobCount={2} speed={0.3} threshold={0.8} className="absolute inset-0 w-full h-full" />
 
-      {/* overlay */}
-      <div className="absolute inset-0 bg-black/30 z-10" />
-
-      {/* Logo + text — dead center */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-8 z-20">
-        <img
-          src="/AlmostLogoWhite.svg"
-          alt="almost"
-          className="w-[86%] max-w-[355px]"
-          style={{ opacity: logoVisible ? 1 : 0, transition: 'opacity 1s ease' }}
-        />
-
-        <p
-          className="font-mono text-white text-[17px] leading-[1.6] text-center whitespace-pre-line"
-          style={{ opacity: textVisible ? 0.8 : 0, transition: 'opacity 1s ease' }}
-        >
-          {TEXTS[textIndex]}
-        </p>
+      {/* Logo + tagline — dead center */}
+      <div className="absolute inset-0 flex items-center justify-center z-20">
+        <div className="relative w-[86%] max-w-[355px]">
+          <img
+            src="/AlmostLogoWhite.svg"
+            alt="almost"
+            className="w-full"
+            style={{ opacity: logoVisible ? 1 : 0, transition: 'opacity 1s ease' }}
+          />
+          <div
+            className="absolute left-1/2 -translate-x-1/2 font-mono text-[#2c2c2c] text-[18px] text-center"
+            style={{ top: '75%', width: '50vw', opacity: textVisible ? 1 : 0, transition: 'opacity 0.8s ease' }}
+          >
+            {textIndex === 0 ? (
+              <p className="leading-[1]">For the ones who nearly got away.</p>
+            ) : (
+              <div className="leading-snug">
+                <p>No profiles.</p>
+                <p>No photos.</p>
+                <p>Just real chemistry.</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Spinner + CTA — bottom */}
+      {/* CTA — bottom */}
       <div className="relative mt-auto px-8 pb-8 z-30">
         <div className="h-[52px] flex items-center justify-center">
-          {spinnerVisible && !ctaVisible && (
-            <div
-              className="w-6 h-6 rounded-full border-2 border-almost-pink/30 border-t-almost-pink animate-spin"
-              style={{ opacity: spinnerVisible ? 1 : 0, transition: 'opacity 0.6s ease' }}
-            />
-          )}
           {ctaVisible && (
             <button
               onClick={onNext}
-              className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center hover:opacity-90 active:opacity-80 animate-fade-in rounded-full"
+              className="w-full py-[15px] bg-almost-pink text-white font-sans text-[15px] text-center hover:opacity-90 active:opacity-80 animate-fade-in rounded-full"
             >
-              Find your connection
+              Find your person
             </button>
           )}
         </div>

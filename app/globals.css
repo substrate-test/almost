@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'NB International';
+  src: url('/fonts/nb-international-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NB International';
+  src: url('/fonts/nb-international-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NB Typewriter Pro';
+  src: url('/fonts/nb-typewriter-normal.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NB Typewriter Pro';
+  src: url('/fonts/nb-typewriter-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: 'NB International';
+  --font-mono: 'NB Typewriter Pro';
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;

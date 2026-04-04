@@ -17,7 +17,7 @@ export default function BrowseScreen({ onBack }: { onBack: () => void }) {
       <div className="pb-8">
         <button
           onClick={onBack}
-          className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center transition-opacity hover:opacity-90 active:opacity-80"
+          className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
         >
           Go back
         </button>

@@ -13,8 +13,8 @@ import ExpiryScreen from '@/components/ExpiryScreen'
 import BrowseVenueScreen from '@/components/BrowseVenueScreen'
 import BrowseNotesScreen from '@/components/BrowseNotesScreen'
 import BrowseRespondScreen from '@/components/BrowseRespondScreen'
+import LookScreen from '@/components/LookScreen'
 import type { MomentData, Screen, Venue, Note } from '@/types'
-import CirclesDance from '@/components/CirclesDance'
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('landing')
@@ -22,6 +22,8 @@ export default function App() {
   const [data, setData] = useState<MomentData>({})
   const [browseVenue, setBrowseVenue] = useState<Venue | null>(null)
   const [activeNote, setActiveNote] = useState<Note | null>(null)
+  const [browseNotesBack, setBrowseNotesBack] = useState<Screen>('browse-venue')
+  const [initialNoteId, setInitialNoteId] = useState<string | undefined>(undefined)
 
   const navigate = (next: Screen) => {
     setScreenKey(k => k + 1)
@@ -32,16 +34,6 @@ export default function App() {
     <main className="fixed inset-0 flex items-center justify-center bg-almost-bg">
       <div className="relative w-full max-w-[430px] h-full overflow-hidden">
 
-        {/* Stars — global home shortcut */}
-        {screen !== 'landing' && (
-          <button
-            onClick={() => { setData({}); setBrowseVenue(null); setActiveNote(null); navigate('landing') }}
-            className="absolute top-[56px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 p-2 transition-opacity hover:opacity-70 active:opacity-50"
-            aria-label="Back to start"
-          >
-            <CirclesDance width={80} height={32} radius={10} />
-          </button>
-        )}
 
         {screen === 'landing' && (
           <LandingScreen key={screenKey} onNext={() => navigate('choice')} />
@@ -53,6 +45,20 @@ export default function App() {
             onBack={() => navigate('landing')}
             onLeave={() => navigate('onboarding-leave')}
             onFind={() => navigate('onboarding-find')}
+            onLook={() => navigate('look')}
+          />
+        )}
+
+        {screen === 'look' && (
+          <LookScreen
+            key={screenKey}
+            onBack={() => navigate('choice')}
+            onSelect={(note: Note) => {
+              setBrowseVenue(note.venue)
+              setInitialNoteId(note.id)
+              setBrowseNotesBack('look')
+              navigate('browse-notes')
+            }}
           />
         )}
 
@@ -138,6 +144,8 @@ export default function App() {
             onBack={() => navigate('onboarding-find')}
             onNext={(venue: Venue) => {
               setBrowseVenue(venue)
+              setInitialNoteId(undefined)
+              setBrowseNotesBack('browse-venue')
               navigate('browse-notes')
             }}
           />
@@ -147,7 +155,8 @@ export default function App() {
           <BrowseNotesScreen
             key={screenKey}
             venue={browseVenue}
-            onBack={() => navigate('browse-venue')}
+            initialNoteId={initialNoteId}
+            onBack={() => navigate(browseNotesBack)}
             onRespond={(note: Note) => {
               setActiveNote(note)
               navigate('browse-respond')

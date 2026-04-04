@@ -29,68 +29,44 @@ export default function LiveScreen({ data, onBack, onPost }: Props) {
     || `You were quietly crying in the queue, hiding it behind your hair. I handed you my drink and you laughed. We talked for almost an hour.\n\nI loved the way you touched your collarbone when you were thinking. You smelled like something floral I still can't place. 🌸 I've been thinking about you ever since.`
 
   return (
-    <div className="flex flex-col h-full bg-almost-bg animate-screen-in px-6">
+    <div className="flex flex-col h-full animate-screen-in px-6" style={{ background: '#f7f5f6' }}>
       {/* Header */}
-      <div className="pt-[48px] pb-[60px] flex items-center">
+      <div className="flex items-center gap-4 pt-[48px] pb-[60px]">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-white font-sans text-xs font-medium tracking-widest uppercase transition-opacity hover:opacity-70"
+          className="flex items-center gap-3 transition-opacity hover:opacity-70"
         >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Back
+          <img src="/Back icon.svg" alt="" width={20} height={11} />
+          <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
         </button>
       </div>
 
-      <h2 className="font-sans text-almost-text leading-tight mb-2" style={{ fontSize: 'clamp(26px, 7vw, 32px)' }}>
-        Preview your note.
-      </h2>
-      <p className="font-mono text-almost-secondary text-sm mb-6">
+      <h1 className="font-mono text-[#2c2c2c] leading-tight mb-2" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+        Preview your note
+      </h1>
+      <p className="font-sans text-[#2c2c2c] text-[16px] leading-[1.2] mb-6">
         Looks good? Post it and let them find you.
       </p>
 
       {/* Note card */}
-      <div
-        className="flex-1 flex flex-col px-6 py-6 overflow-hidden"
-        style={{
-          backgroundColor: '#141414',
-          backgroundImage: `
-            repeating-linear-gradient(
-              to right,
-              transparent,
-              transparent 34px,
-              rgba(255,255,255,0.06) 34px,
-              rgba(255,255,255,0.06) 35px
-            ),
-            repeating-linear-gradient(
-              to bottom,
-              transparent,
-              transparent 34px,
-              rgba(255,255,255,0.06) 34px,
-              rgba(255,255,255,0.06) 35px
-            )
-          `,
-        }}
-      >
-        {/* Note text */}
-        <p className="font-sans text-almost-text text-[20px] leading-[1.75] flex-1 overflow-y-auto whitespace-pre-wrap">
-          &ldquo;{noteText}&rdquo;
-        </p>
-
-        {/* Chips row */}
-        <div className="flex items-center gap-1.5 mt-5 min-w-0">
+      <div className="flex-1 bg-white rounded-xl p-4 flex flex-col justify-between overflow-hidden">
+        <div className="flex-1 overflow-y-auto">
+          <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
+            {noteText}
+          </p>
+        </div>
+        <div className="flex items-center gap-1.5 pt-3 min-w-0">
           {data.venue && (
-            <span className="bg-black/50 px-2.5 py-[5px] font-mono text-[11px] text-white/70 truncate min-w-0">
+            <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
               {data.venue.name}
             </span>
           )}
           {data.datetime && (
-            <span className="bg-black/50 px-2.5 py-[5px] font-mono text-[11px] text-white/70 shrink-0">
+            <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] shrink-0">
               {formatDate(data.datetime)}
             </span>
           )}
-          <span className="bg-black/50 px-2.5 py-[5px] font-mono text-[11px] text-almost-pink/80 shrink-0 ml-auto">
+          <span className="font-sans text-[12px] text-[#FE0155] shrink-0 ml-auto tabular-nums">
             24:00:00
           </span>
         </div>
@@ -100,7 +76,7 @@ export default function LiveScreen({ data, onBack, onPost }: Props) {
       <div className="pb-8 pt-5">
         <button
           onClick={onPost}
-          className="w-full py-[15px] bg-almost-pink text-white font-mono text-[15px] text-center transition-opacity hover:opacity-90 active:opacity-80"
+          className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
         >
           Post your note
         </button>

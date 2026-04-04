@@ -36,8 +36,8 @@ void main() {
     field += 0.013 / (d2 + 0.001);
   }
 
-  vec3 bg  = vec3(0.109, 0.075, 0.094);
-  vec3 mid = vec3(0.45,  0.01,  0.20);
+  vec3 bg  = vec3(0.737, 0.737, 0.737);
+  vec3 mid = vec3(0.996, 0.004, 0.333);
   vec3 hot = vec3(0.996, 0.004, 0.333);
 
   float lo = u_threshold * 0.38;

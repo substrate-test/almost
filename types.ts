@@ -35,6 +35,7 @@ export type Screen =
   | 'posted'
   | 'expiry'
   | 'browse-venue'
+  | 'look'
   | 'browse-notes'
   | 'browse-respond'
   | 'browse-auth'

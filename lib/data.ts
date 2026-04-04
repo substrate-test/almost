@@ -158,3 +158,7 @@ export function formatCountdown(ms: number): string {
 export function formatDate(d: Date): string {
   return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
 }
+
+export function allLiveNotes(): Note[] {
+  return DEMO_NOTES.filter(isLive)
+}

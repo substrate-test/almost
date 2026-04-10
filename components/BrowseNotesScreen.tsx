@@ -2,17 +2,51 @@
 
 import { useState, useEffect } from 'react'
 import type { Venue, Note } from '@/types'
-import { notesForVenue, formatCountdown, formatDate, msLeft } from '@/lib/data'
+import { notesForVenue, formatCountdown, formatDate, msLeft, humanWhen } from '@/lib/data'
+
+function ShareButton({ note, primary = false }: { note: Note; primary?: boolean }) {
+  const handleShare = () => {
+    const text = `"${note.text}" — left at ${note.venue.name}`
+    if (navigator.share) {
+      navigator.share({ title: 'A note on Almost', text })
+    } else {
+      navigator.clipboard.writeText(text)
+    }
+  }
+
+  if (primary) {
+    return (
+      <button
+        onClick={handleShare}
+        className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
+      >
+        Share note
+      </button>
+    )
+  }
+
+  return (
+    <button
+      onClick={handleShare}
+      className="w-full py-2 font-sans text-[15px] text-[#9d9d9d] text-center transition-opacity hover:opacity-60 active:opacity-40"
+    >
+      Share note
+    </button>
+  )
+}
 
 interface Props {
   venue: Venue
   initialNoteId?: string
+  notes?: Note[]
+  context?: 'browse' | 'look'
   onBack: () => void
   onRespond: (note: Note) => void
+  onViewMyNote?: (note: Note) => void
 }
 
-export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onRespond }: Props) {
-  const notes = notesForVenue(venue.id)
+export default function BrowseNotesScreen({ venue, initialNoteId, notes: notesProp, context = 'browse', onBack, onRespond, onViewMyNote }: Props) {
+  const notes = notesProp ?? notesForVenue(venue.id)
   const initialIndex = initialNoteId ? Math.max(0, notes.findIndex(n => n.id === initialNoteId)) : 0
   const [index, setIndex] = useState(initialIndex)
   const [tick, setTick] = useState(0)
@@ -26,17 +60,17 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
     return (
       <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
         <div className="flex flex-col h-full px-6">
-        <div className="pt-[48px] pb-[60px] flex items-center">
+        <div className="pt-8 pb-[60px] flex items-center">
           <button
             onClick={onBack}
             className="flex items-center gap-3 transition-opacity hover:opacity-70"
           >
             <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
+            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
           </button>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center">
-          <p className="font-sans text-[#2c2c2c] text-[22px]">No notes here yet.</p>
+          <p className="font-sans text-[#2c2c2c] text-[22px]">Nobody here yet. Or they were, and they bottled it.</p>
           <p className="font-sans text-[#5d5d5d] text-[16px] leading-[1.2] max-w-[260px]">
             Nothing live at {venue.name} right now. Check back later — or be the first to leave one.
           </p>
@@ -59,21 +93,46 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
     <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
       <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="px-6 pt-[48px] pb-4 flex items-center justify-between">
+      <div className="px-6 pt-8 flex items-center justify-between">
         <button
           onClick={onBack}
           className="flex items-center gap-3 transition-opacity hover:opacity-70"
         >
           <img src="/Back icon.svg" alt="" width={20} height={11} />
-          <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
+          <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
         </button>
       </div>
 
-      {/* Venue heading */}
-      <div className="px-6 pb-6">
-        <h1 className="font-mono text-[#2c2c2c] leading-tight" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
-          {venue.name}
+      {/* Human date heading */}
+      <div className="px-6 mt-8 mb-1">
+        <h1 className="font-mono text-[#2c2c2c]" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+          {humanWhen(note.datetime)}
         </h1>
+      </div>
+
+      {/* Pagination + arrows */}
+      <div className="px-6 mt-4 mb-3 flex items-center justify-between">
+        <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest">
+          Note {index + 1}/{notes.length}
+        </span>
+        {notes.length > 1 && (
+          <div className="flex gap-4">
+            <button
+              onClick={() => setIndex(i => Math.max(0, i - 1))}
+              disabled={index === 0}
+              className="transition-opacity disabled:opacity-25 hover:opacity-60"
+            >
+              <img src="/Back icon.svg" alt="" width={20} height={11} />
+            </button>
+            <button
+              onClick={() => setIndex(i => Math.min(notes.length - 1, i + 1))}
+              disabled={index === notes.length - 1}
+              className="transition-opacity disabled:opacity-25 hover:opacity-60"
+            >
+              <img src="/Back icon.svg" alt="" width={20} height={11} className="rotate-180" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Note card */}
@@ -85,7 +144,7 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
         </div>
         <div className="flex items-center gap-1.5 pt-3 min-w-0">
           <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
-            {venue.name}
+            {note.venue.name}
           </span>
           <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] shrink-0">
             {formatDate(note.datetime)}
@@ -96,42 +155,39 @@ export default function BrowseNotesScreen({ venue, initialNoteId, onBack, onResp
         </div>
       </div>
 
-      {/* Navigation + CTA */}
+      {/* CTA */}
       <div className="px-6 pb-8 pt-4 flex flex-col gap-3">
-        {/* Pagination + arrows */}
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-sans text-[#7b7b7b] text-[15px]">
-            Note {index + 1} of {notes.length}
-          </span>
-          {notes.length > 1 && (
-            <div className="flex gap-2">
-              <button
-                onClick={() => setIndex(i => Math.max(0, i - 1))}
-                disabled={index === 0}
-                className="w-9 h-9 flex items-center justify-center bg-white border border-[#e0e0e0] rounded-lg text-[#5d5d5d] transition-all disabled:opacity-25 hover:border-[#d0d0d0]"
-              >
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                  <path d="M16 10H4M4 10L9 5M4 10L9 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setIndex(i => Math.min(notes.length - 1, i + 1))}
-                disabled={index === notes.length - 1}
-                className="w-9 h-9 flex items-center justify-center bg-white border border-[#e0e0e0] rounded-lg text-[#5d5d5d] transition-all disabled:opacity-25 hover:border-[#d0d0d0]"
-              >
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                  <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-            </div>
-          )}
-        </div>
-        <button
-          onClick={() => onRespond(note)}
-          className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
-        >
-          This is me — make a move
-        </button>
+        {note.mine ? (
+          <>
+            <button
+              onClick={() => onViewMyNote?.(note)}
+              className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
+            >
+              View my note
+            </button>
+            <ShareButton note={note} />
+          </>
+        ) : context === 'browse' ? (
+          <>
+            <button
+              onClick={() => onRespond(note)}
+              className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
+            >
+              Write back
+            </button>
+            <ShareButton note={note} />
+          </>
+        ) : (
+          <>
+            <ShareButton note={note} primary />
+            <button
+              onClick={() => onRespond(note)}
+              className="w-full py-2 font-sans text-[15px] text-[#9d9d9d] text-center transition-opacity hover:opacity-60 active:opacity-40"
+            >
+              Write back
+            </button>
+          </>
+        )}
       </div>
       </div>
     </div>

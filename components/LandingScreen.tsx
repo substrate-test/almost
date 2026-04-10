@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import LavaBackground from '@/components/LavaBackground'
 
-export default function LandingScreen({ onNext }: { onNext: () => void }) {
+export default function LandingScreen({ onNext, onSkip }: { onNext: () => void; onSkip?: () => void }) {
   const [logoVisible, setLogoVisible] = useState(false)
   const [textIndex, setTextIndex] = useState(0)
   const [textVisible, setTextVisible] = useState(false)
@@ -20,6 +20,13 @@ export default function LandingScreen({ onNext }: { onNext: () => void }) {
 
   return (
     <div className="relative flex flex-col h-full overflow-hidden" style={{ background: '#bcbcbc' }}>
+      {process.env.NODE_ENV === 'development' && onSkip && (
+        <button
+          onClick={onSkip}
+          className="absolute top-3 left-1/2 -translate-x-1/2 z-50 w-10 h-10 opacity-0"
+          aria-label="Skip to app"
+        />
+      )}
       <LavaBackground blobCount={2} speed={0.3} threshold={0.8} className="absolute inset-0 w-full h-full" />
 
       {/* Logo + tagline — dead center */}
@@ -36,7 +43,7 @@ export default function LandingScreen({ onNext }: { onNext: () => void }) {
             style={{ top: '75%', width: '50vw', opacity: textVisible ? 1 : 0, transition: 'opacity 0.8s ease' }}
           >
             {textIndex === 0 ? (
-              <p className="leading-[1]">For the ones who nearly got away.</p>
+              <p className="leading-[1]">For the ones that almost got away.</p>
             ) : (
               <div className="leading-snug">
                 <p>No profiles.</p>

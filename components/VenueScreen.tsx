@@ -27,17 +27,6 @@ function RadioDot({ selected }: { selected: boolean }) {
   )
 }
 
-// List/Map toggle radio — uses exported SVG assets
-function ToggleRadio({ selected }: { selected: boolean }) {
-  return (
-    <img
-      src={selected ? '/Radio Button – selected.svg' : '/Radio Button – deselected.svg'}
-      alt=""
-      width={25}
-      height={25}
-    />
-  )
-}
 
 interface Props {
   onBack: () => void
@@ -75,20 +64,20 @@ export default function VenueScreen({ onBack, onNext }: Props) {
       <div className="flex flex-col h-full px-[calc(8.33%+2px)]">
 
         {/* Header */}
-        <div className="pt-8 flex items-center justify-between">
+        <div className="pt-8 flex items-center">
           <button
             onClick={onBack}
             className="flex items-center gap-3 transition-opacity hover:opacity-60 active:opacity-40"
           >
             <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
+            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
           </button>
-          <span className="font-sans text-[#2c2c2c] text-[15px]">1 / 3</span>
         </div>
 
         {/* Heading */}
+        <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest mt-14 mb-2">1 / 3</span>
         <h1
-          className="font-mono text-[#2c2c2c] mt-14 mb-3"
+          className="font-mono text-[#2c2c2c] mb-3"
           style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}
         >
           Where did it happen?
@@ -103,7 +92,7 @@ export default function VenueScreen({ onBack, onNext }: Props) {
             onClick={() => setView('list')}
             className="flex items-center gap-2"
           >
-            <ToggleRadio selected={view === 'list'} />
+            <RadioDot selected={view === 'list'} />
             <span className="font-sans text-[#2c2c2c] text-[16px]">List</span>
           </button>
           {apiKey && (
@@ -111,26 +100,28 @@ export default function VenueScreen({ onBack, onNext }: Props) {
               onClick={() => setView('map')}
               className="flex items-center gap-2"
             >
-              <ToggleRadio selected={view === 'map'} />
+              <RadioDot selected={view === 'map'} />
               <span className="font-sans text-[#2c2c2c] text-[16px]">Map</span>
             </button>
           )}
         </div>
 
         {/* Search bar */}
-        <div className="bg-white rounded-xl px-4 py-[15px] flex items-center gap-3 mb-5">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <circle cx="7.5" cy="7.5" r="6" stroke="#7b7b7b" strokeWidth="1.4" />
-            <path d="M13 13L16 16" stroke="#7b7b7b" strokeWidth="1.4" strokeLinecap="round" />
-          </svg>
-          <input
-            type="text"
-            value={query}
-            onChange={e => { setQuery(e.target.value); setSelected(null) }}
-            placeholder="Search venues"
-            className="flex-1 bg-transparent font-sans text-[16px] text-[#2c2c2c] placeholder:text-[#7b7b7b]"
-          />
-        </div>
+        {view === 'list' && (
+          <div className="bg-white rounded-xl px-4 py-[15px] flex items-center gap-3 mb-5">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="7.5" cy="7.5" r="6" stroke="#7b7b7b" strokeWidth="1.4" />
+              <path d="M13 13L16 16" stroke="#7b7b7b" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+            <input
+              type="text"
+              value={query}
+              onChange={e => { setQuery(e.target.value); setSelected(null) }}
+              placeholder="Search venues"
+              className="flex-1 bg-transparent font-sans text-[16px] text-[#2c2c2c] placeholder:text-[#7b7b7b]"
+            />
+          </div>
+        )}
 
         {/* List view */}
         {view === 'list' && (

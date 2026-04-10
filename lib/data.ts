@@ -54,6 +54,7 @@ export const VENUES: Venue[] = [
 
 const now = Date.now()
 const h = (n: number) => new Date(now - n * 60 * 60 * 1000)
+const d = (n: number) => new Date(now - n * 24 * 60 * 60 * 1000)
 
 export const DEMO_NOTES: Note[] = [
   {
@@ -97,6 +98,44 @@ export const DEMO_NOTES: Note[] = [
     venue: VENUES.find(v => v.id === '18')!,
     datetime: h(5),
     submittedAt: h(5),
+  },
+  // My notes — live
+  {
+    id: 'my1',
+    text: `You were wearing a yellow jacket and reading Murakami at the bar. I almost said something three times. You ordered the same drink as me and we caught each other noticing.\n\nIf you find this — it was you.`,
+    venue: VENUES.find(v => v.id === '7')!,
+    datetime: h(8),
+    submittedAt: h(8),
+    mine: true,
+    moves: 2,
+  },
+  {
+    id: 'my2',
+    text: `You were at the coffee stand just before it closed. Green tote bag. We made eye contact twice and I nearly said something both times.\n\nI didn't. Regretted it immediately.`,
+    venue: VENUES.find(v => v.id === '7')!,
+    datetime: h(4),
+    submittedAt: h(4),
+    mine: true,
+    moves: 0,
+  },
+  // My notes — expired (past)
+  {
+    id: 'my3',
+    text: `You laughed at something on your phone and I wanted to ask what was so funny. You had this brilliant, unguarded laugh. I think about it more than I should.`,
+    venue: VENUES.find(v => v.id === '1')!,
+    datetime: d(10),
+    submittedAt: d(10),
+    mine: true,
+    moves: 0,
+  },
+  {
+    id: 'my4',
+    text: `We kept ending up at the same stalls. I think you noticed too. You smiled at the vintage record one and I nearly used that as an opener.\n\nMaybe next time.`,
+    venue: VENUES.find(v => v.id === '16')!,
+    datetime: d(19),
+    submittedAt: d(19),
+    mine: true,
+    moves: 2,
   },
 ]
 
@@ -161,4 +200,65 @@ export function formatDate(d: Date): string {
 
 export function allLiveNotes(): Note[] {
   return DEMO_NOTES.filter(isLive)
+}
+
+export const RESPONSE_WINDOW_HOURS = 48
+
+export interface NoteResponse {
+  text: string
+  respondedAt: Date
+}
+
+export const DEMO_RESPONSES: Record<string, NoteResponse[]> = {
+  'my1': [
+    {
+      text: `I think that was me. I was reading Norwegian Wood actually — I remember you. I didn't know what to say either so I just kept looking over.\n\nI'm glad you left this.`,
+      respondedAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
+    },
+    {
+      text: `This might be a long shot but I was sitting near the window with a friend. You caught my eye a few times. I've been thinking about it since I left.`,
+      respondedAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
+    },
+  ],
+  'my4': [
+    {
+      text: `We did keep ending up at the same places. I saw you looking at the same Joni Mitchell record as me and I nearly said something. I walked away and immediately regretted it.`,
+      respondedAt: new Date(Date.now() - 31 * 60 * 60 * 1000),
+    },
+  ],
+}
+
+export function msLeftForResponse(response: NoteResponse): number {
+  return response.respondedAt.getTime() + RESPONSE_WINDOW_HOURS * 3600 * 1000 - Date.now()
+}
+
+export function timeAgo(date: Date): string {
+  const mins = Math.floor((Date.now() - date.getTime()) / 60000)
+  if (mins < 60) return `${mins}m ago`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}h ago`
+  return `${Math.floor(hrs / 24)}d ago`
+}
+
+export function myLiveNotes(): Note[] {
+  return DEMO_NOTES.filter(n => n.mine && isLive(n))
+}
+
+export function myPastNotes(): Note[] {
+  return DEMO_NOTES.filter(n => n.mine && !isLive(n))
+}
+
+export function humanWhen(d: Date): string {
+  const now = new Date()
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const dateStart = new Date(d.getFullYear(), d.getMonth(), d.getDate())
+  const daysDiff = Math.round((todayStart.getTime() - dateStart.getTime()) / 86400000)
+
+  if (daysDiff === 0) return 'Tonight'
+  if (daysDiff === 1) return 'Last night'
+  if (daysDiff <= 6) return 'The other night'
+  if (daysDiff <= 13) return 'Last week'
+  if (daysDiff <= 29) return 'A few weeks ago'
+  if (daysDiff <= 59) return 'Last month'
+  return 'A few months ago'
 }

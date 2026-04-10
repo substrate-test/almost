@@ -185,7 +185,7 @@ function BackButton({ onClick }: { onClick: () => void }) {
       className="flex items-center gap-3 transition-opacity hover:opacity-70"
     >
       <img src="/Back icon.svg" alt="" width={20} height={11} />
-      <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
+      <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
     </button>
   )
 }
@@ -211,13 +211,11 @@ export default function DateTimeScreen({ onBack, onNext }: Props) {
       {/* Header */}
       <div className="flex items-center gap-4 pt-[48px] pb-[60px]">
         <BackButton onClick={onBack} />
-        <span className="font-sans text-[#2c2c2c] text-[15px] ml-auto">
-          2 / 3
-        </span>
       </div>
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto">
+        <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest block mb-2">2 / 3</span>
         <h1 className="font-mono text-[#2c2c2c] leading-tight mb-3" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
           When did you see them?
         </h1>

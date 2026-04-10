@@ -2,9 +2,9 @@
 
 const STEPS = {
   leave: [
-    { heading: 'Pick the place', body: 'Choose the venue where it happened.' },
-    { heading: 'Choose a date', body: 'When did it happen? Roughly is fine.' },
-    { heading: 'Write your note', body: "Pin your note. It's live for 24 hours." },
+    { heading: 'Leave your note', body: 'Pick the venue, the time, and write what you felt. Free.' },
+    { heading: 'They find you', body: 'If they felt it too, they\'ll write back. Let the universe do its thing.' },
+    { heading: 'Unlock the chat', body: 'If you both want to talk, you can open the conversation.' },
   ],
   find: [
     { heading: 'Pick a venue', body: "Somewhere you've been recently." },
@@ -14,7 +14,7 @@ const STEPS = {
 }
 
 const HEADINGS = {
-  leave: 'Your moment is three steps away.',
+  leave: 'It starts with a note.',
   find: 'Your move is three steps away.',
 }
 
@@ -45,7 +45,7 @@ export default function OnboardingScreen({ mode, onBack, onDone }: Props) {
             className="flex items-center gap-3 transition-opacity hover:opacity-60 active:opacity-40"
           >
             <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
+            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
           </button>
         </div>
 

@@ -31,16 +31,6 @@ function RadioDot({ selected }: { selected: boolean }) {
   )
 }
 
-function ToggleRadio({ selected }: { selected: boolean }) {
-  return (
-    <img
-      src={selected ? '/Radio Button – selected.svg' : '/Radio Button – deselected.svg'}
-      alt=""
-      width={25}
-      height={25}
-    />
-  )
-}
 
 function ExpiryChip({ venueId }: { venueId: string }) {
   const [ms, setMs] = useState(() => minMsLeftForVenue(venueId))
@@ -127,7 +117,7 @@ export default function BrowseVenueScreen({ onBack, onNext }: Props) {
             className="flex items-center gap-3 transition-opacity hover:opacity-60 active:opacity-40"
           >
             <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
+            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
           </button>
         </div>
 
@@ -148,7 +138,7 @@ export default function BrowseVenueScreen({ onBack, onNext }: Props) {
             onClick={() => setView('list')}
             className="flex items-center gap-2"
           >
-            <ToggleRadio selected={view === 'list'} />
+            <RadioDot selected={view === 'list'} />
             <span className="font-sans text-[#2c2c2c] text-[16px]">List</span>
           </button>
           {apiKey && (
@@ -156,26 +146,28 @@ export default function BrowseVenueScreen({ onBack, onNext }: Props) {
               onClick={() => setView('map')}
               className="flex items-center gap-2"
             >
-              <ToggleRadio selected={view === 'map'} />
+              <RadioDot selected={view === 'map'} />
               <span className="font-sans text-[#2c2c2c] text-[16px]">Map</span>
             </button>
           )}
         </div>
 
         {/* Search bar */}
-        <div className="bg-white rounded-xl px-4 py-[15px] flex items-center gap-3 mb-5">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <circle cx="7.5" cy="7.5" r="6" stroke="#7b7b7b" strokeWidth="1.4" />
-            <path d="M13 13L16 16" stroke="#7b7b7b" strokeWidth="1.4" strokeLinecap="round" />
-          </svg>
-          <input
-            type="text"
-            value={query}
-            onChange={e => { setQuery(e.target.value); setSelected(null) }}
-            placeholder="Search venues"
-            className="flex-1 bg-transparent font-sans text-[16px] text-[#2c2c2c] placeholder:text-[#7b7b7b]"
-          />
-        </div>
+        {view === 'list' && (
+          <div className="bg-white rounded-xl px-4 py-[15px] flex items-center gap-3 mb-5">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="7.5" cy="7.5" r="6" stroke="#7b7b7b" strokeWidth="1.4" />
+              <path d="M13 13L16 16" stroke="#7b7b7b" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+            <input
+              type="text"
+              value={query}
+              onChange={e => { setQuery(e.target.value); setSelected(null) }}
+              placeholder="Search venues"
+              className="flex-1 bg-transparent font-sans text-[16px] text-[#2c2c2c] placeholder:text-[#7b7b7b]"
+            />
+          </div>
+        )}
 
         {/* List view */}
         {view === 'list' && (

@@ -36,13 +36,11 @@ export default function WriteScreen({ venue, datetime, onBack, onNext }: Props) 
             className="flex items-center gap-3 transition-opacity hover:opacity-70"
           >
             <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide">Back</span>
+            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
           </button>
-          <span className="font-sans text-[#2c2c2c] text-[15px] ml-auto">
-            3 / 3
-          </span>
         </div>
 
+        <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest block mb-2">3 / 3</span>
         <h1 className="font-mono text-[#2c2c2c] leading-tight mb-2" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
           Write them a note
         </h1>
@@ -90,7 +88,7 @@ export default function WriteScreen({ venue, datetime, onBack, onNext }: Props) 
             className="w-full py-[15px] text-white font-sans text-[16px] text-center transition-all duration-200 disabled:cursor-not-allowed active:opacity-80 rounded-full"
             style={{ background: canSubmit ? '#FE0155' : '#a0a0a0' }}
           >
-            Continue
+            Leave your note
           </button>
         </div>
       </div>

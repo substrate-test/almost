@@ -12,6 +12,8 @@ export interface Note {
   venue: Venue
   datetime: Date
   submittedAt: Date
+  mine?: boolean
+  moves?: number
 }
 
 export interface MomentData {
@@ -24,18 +26,24 @@ export interface MomentData {
 
 export type Screen =
   | 'landing'
+  | 'register-auth'
+  | 'register-name'
+  | 'register-dob'
   | 'choice'
   | 'onboarding-leave'
   | 'onboarding-find'
   | 'venue'
   | 'datetime'
   | 'write'
-  | 'auth'
-  | 'live'
   | 'posted'
   | 'expiry'
   | 'browse-venue'
   | 'look'
   | 'browse-notes'
   | 'browse-respond'
-  | 'browse-auth'
+  | 'response-sent'
+  | 'my-notes'
+  | 'my-note-detail'
+  | 'view-response'
+  | 'notifications'
+  | 'settings'

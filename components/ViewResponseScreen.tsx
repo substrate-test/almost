@@ -91,7 +91,7 @@ export default function ViewResponseScreen({ note, responses, onBack, onOpenChat
 
         {/* Reply label + pagination */}
         <div className="flex items-center justify-between mb-3">
-          <p className="font-sans text-[#FE0155] text-[15px] uppercase tracking-wide">
+          <p className="font-sans text-[#9d9d9d] text-[15px] uppercase tracking-wide">
             Reply {index + 1}/{responses.length}
           </p>
           {responses.length > 1 && (

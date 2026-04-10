@@ -13,10 +13,10 @@ export default function RegisterNameScreen({ onBack, onNext, onSkip }: Props & {
 
   return (
     <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
-      {process.env.NODE_ENV === 'development' && onSkip && (
+      {onSkip && (
         <button onClick={onSkip} className="absolute top-3 left-1/2 -translate-x-1/2 z-50 w-20 h-20 opacity-0" aria-label="Skip to app" />
       )}
-      <div className="flex flex-col h-full px-6">
+      <div className="relative z-10 flex flex-col h-full px-6">
         <div className="pt-[48px]">
           <button onClick={onBack} className="flex items-center gap-3 transition-opacity hover:opacity-70">
             <img src="/Back icon.svg" alt="" width={20} height={11} />
@@ -25,11 +25,11 @@ export default function RegisterNameScreen({ onBack, onNext, onSkip }: Props & {
         </div>
 
         <div className="flex-1 flex flex-col justify-center">
-          <h1 className="font-mono text-[#2c2c2c] leading-tight mb-2" style={{ fontSize: 36, lineHeight: 1.15 }}>
-            What&apos;s your name?
+<h1 className="font-mono text-[#2c2c2c] leading-tight mb-2" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+            What do people call you?
           </h1>
           <p className="font-sans text-[#5d5d5d] text-[16px] leading-[1.2] mb-8">
-            Just your first name is fine.
+            First name only. We&apos;re not LinkedIn.
           </p>
           <input
             type="text"

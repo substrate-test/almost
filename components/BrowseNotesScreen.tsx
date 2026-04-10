@@ -138,12 +138,17 @@ export default function BrowseNotesScreen({ venue, initialNoteId, notes: notesPr
       {/* Note card */}
       <div className="flex-1 mx-6 bg-white rounded-xl p-4 flex flex-col justify-between overflow-hidden">
         <div className="flex-1 overflow-y-auto">
+          {note.mine && (
+            <span className="inline-block bg-almost-pink rounded px-2 py-1 font-sans text-[12px] text-white mb-3">
+              My note
+            </span>
+          )}
           <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
             {note.text}
           </p>
         </div>
         <div className="flex items-center gap-1.5 pt-3 min-w-0">
-          <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
+<span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
             {note.venue.name}
           </span>
           <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] shrink-0">

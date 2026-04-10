@@ -41,6 +41,10 @@ const config: Config = {
           '0%, 100%': { transform: 'scale(1)', opacity: '0.7' },
           '50%': { transform: 'scale(1.04)', opacity: '1' },
         },
+        'sheet-up': {
+          from: { transform: 'translateY(100%)' },
+          to: { transform: 'translateY(0)' },
+        },
       },
       animation: {
         'screen-in': 'screen-in 0.45s cubic-bezier(0.16,1,0.3,1) forwards',
@@ -48,6 +52,7 @@ const config: Config = {
         'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
         'count-up': 'count-up 0.4s ease-out forwards',
         'breathe': 'breathe 5s ease-in-out infinite',
+        'sheet-up': 'sheet-up 0.4s cubic-bezier(0.16,1,0.3,1) forwards',
       },
     },
   },

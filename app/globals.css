@@ -91,6 +91,16 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
 @keyframes orb-pulse {
   0%, 100% { transform: translate(-50%, -50%) scale(0.82); opacity: 0.7; }
   50%       { transform: translate(-50%, -50%) scale(1.2);  opacity: 1; }

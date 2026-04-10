@@ -1,5 +1,7 @@
 'use client'
 
+import Typewriter from '@/components/Typewriter'
+
 interface Props {
   onBack: () => void
   onLeave: () => void
@@ -31,8 +33,6 @@ function Card({ title, body, onClick }: { title: string; body: string; onClick: 
 export default function ChoiceScreen({ onBack, onLeave, onFind, onLook }: Props) {
   return (
     <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
-      <img src="/Orbs2.svg" alt="" aria-hidden="true" className="absolute pointer-events-none" style={{ top: '4%', left: '50%', transform: 'translateX(-50%)', width: 388, height: 364 }} />
-
       <div className="relative z-10 flex flex-col h-full px-[calc(8.33%+2px)]">
 
         {/* Back */}
@@ -47,12 +47,9 @@ export default function ChoiceScreen({ onBack, onLeave, onFind, onLook }: Props)
         </div>
 
         {/* Hero — heading */}
-        <div className="flex-1 flex items-center justify-center">
-          <h1
-            className="font-mono text-[#2c2c2c] text-center"
-            style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15, width: '172px' }}
-          >
-            What brings you here?
+        <div className="flex-1 flex items-center">
+          <h1 className="font-mono text-[#2c2c2c]" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+            <Typewriter text="What brings you here today?" speed={90} orbCursor />
           </h1>
         </div>
 
@@ -70,7 +67,7 @@ export default function ChoiceScreen({ onBack, onLeave, onFind, onLook }: Props)
           />
           <Card
             title="Just looking"
-            body="Browse the moments people left behind. No agenda. Pure nosiness."
+            body="Sometimes you're not looking for anything. And then you find something. Or not. You do you."
             onClick={onLook}
           />
         </div>

@@ -1,10 +1,12 @@
 'use client'
 
+import Typewriter from '@/components/Typewriter'
+
 const STEPS = {
   leave: [
-    { heading: 'Leave your note', body: 'Pick the venue, the time, and write what you felt. Free.' },
-    { heading: 'They find you', body: 'If they felt it too, they\'ll write back. Let the universe do its thing.' },
-    { heading: 'Unlock the chat', body: 'If you both want to talk, you can open the conversation.' },
+    { heading: 'Leave your note', body: 'Write something only they\'d recognise. Set the scene. You were both there.' },
+    { heading: 'Over to them', body: 'What you seek might just be seeking you.' },
+    { heading: 'Unlock the chat', body: 'When it feels right, £10 starts the conversation.' },
   ],
   find: [
     { heading: 'Pick a venue', body: "Somewhere you've been recently." },
@@ -15,7 +17,7 @@ const STEPS = {
 
 const HEADINGS = {
   leave: 'It starts with a note.',
-  find: 'Your move is three steps away.',
+  find: 'There might be a note just for you.',
 }
 
 const CTAS = {
@@ -34,8 +36,6 @@ export default function OnboardingScreen({ mode, onBack, onDone }: Props) {
 
   return (
     <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
-      <img src="/Orbs1.svg" alt="" aria-hidden="true" className="absolute pointer-events-none" style={{ top: '4%', left: '50%', transform: 'translateX(-50%)', width: 308, height: 303 }} />
-
       <div className="relative z-10 flex flex-col h-full px-[calc(8.33%+2px)]">
 
         {/* Back */}
@@ -50,12 +50,9 @@ export default function OnboardingScreen({ mode, onBack, onDone }: Props) {
         </div>
 
         {/* Hero heading */}
-        <div className="flex-1 flex items-center justify-center">
-          <h1
-            className="font-mono text-[#2c2c2c] text-center"
-            style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15, width: '172px' }}
-          >
-            {HEADINGS[mode]}
+        <div className="flex-1 flex items-center">
+          <h1 className="font-mono text-[#2c2c2c]" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+            <Typewriter text={HEADINGS[mode]} speed={90} orbCursor />
           </h1>
         </div>
 

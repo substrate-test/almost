@@ -43,7 +43,7 @@ export default function RegisterDOBScreen({ onBack, onNext, onSkip }: Props & { 
   return (
     <div className="relative flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
       {process.env.NODE_ENV === 'development' && onSkip && (
-        <button onClick={onSkip} className="absolute top-3 left-1/2 -translate-x-1/2 z-50 w-10 h-10 opacity-0" aria-label="Skip to app" />
+        <button onClick={onSkip} className="absolute top-3 left-1/2 -translate-x-1/2 z-50 w-20 h-20 opacity-0" aria-label="Skip to app" />
       )}
       <div className="flex flex-col h-full px-6">
         <div className="pt-[48px]">

@@ -34,9 +34,30 @@ interface Props {
 export default function LookScreen({ onBack, onSelect }: Props) {
   const [view, setView] = useState<View>('list')
   const [query, setQuery] = useState('')
+  const [sortAsc, setSortAsc] = useState(false)
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null)
   const [, setTick] = useState(0)
+  const [refreshKey, setRefreshKey] = useState(0)
+  const [refreshing, setRefreshing] = useState(false)
   const mapRef = useRef<google.maps.Map | null>(null)
+  const listRef = useRef<HTMLDivElement | null>(null)
+  const touchStartY = useRef(0)
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const delta = e.changedTouches[0].clientY - touchStartY.current
+    const atTop = (listRef.current?.scrollTop ?? 0) === 0
+    if (delta > 60 && atTop) {
+      setRefreshing(true)
+      setTimeout(() => {
+        setRefreshKey(k => k + 1)
+        setRefreshing(false)
+      }, 800)
+    }
+  }
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''
   const { isLoaded } = useJsApiLoader({ googleMapsApiKey: apiKey })
@@ -49,14 +70,18 @@ export default function LookScreen({ onBack, onSelect }: Props) {
 
   useEffect(() => { setSelectedVenue(null) }, [view])
 
-  const notes = allLiveNotes()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const notes = useMemo(() => allLiveNotes(), [refreshKey])
   const counts = liveNoteCounts()
 
   const venuesWithNotes = useMemo(() => VENUES.filter(v => (counts[v.id] ?? 0) > 0), [counts])
 
   const sorted = useMemo(() =>
-    [...notes].sort((a, b) => b.submittedAt.getTime() - a.submittedAt.getTime()),
-    [notes]
+    [...notes].sort((a, b) => sortAsc
+      ? a.submittedAt.getTime() - b.submittedAt.getTime()
+      : b.submittedAt.getTime() - a.submittedAt.getTime()
+    ),
+    [notes, sortAsc]
   )
 
   const filteredNotes = useMemo(() => {
@@ -111,10 +136,10 @@ export default function LookScreen({ onBack, onSelect }: Props) {
         )}
       </div>
 
-      {/* Search — list only */}
+      {/* Search + sort — list only */}
       {view === 'list' && (
-        <div className="px-6 mb-4">
-          <div className="bg-white rounded-xl px-4 py-[15px] flex items-center gap-3">
+        <div className="px-6 mb-4 flex items-center gap-3">
+          <div className="flex-1 bg-white rounded-xl px-4 py-[15px] flex items-center gap-3">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <circle cx="7.5" cy="7.5" r="6" stroke="#7b7b7b" strokeWidth="1.4" />
               <path d="M13 13L16 16" stroke="#7b7b7b" strokeWidth="1.4" strokeLinecap="round" />
@@ -127,13 +152,35 @@ export default function LookScreen({ onBack, onSelect }: Props) {
               className="flex-1 bg-transparent font-sans text-[16px] text-[#2c2c2c] placeholder:text-[#7b7b7b]"
             />
           </div>
+          <button
+            onClick={() => setSortAsc(a => !a)}
+            className="bg-white rounded-xl px-3 py-[15px] flex items-center gap-1.5 shrink-0 transition-opacity hover:opacity-70"
+          >
+            <span className="font-sans text-[#2c2c2c] text-[14px]">{sortAsc ? 'Ancient' : 'Recent'}</span>
+            <svg
+              width="12" height="12" viewBox="0 0 12 12" fill="none"
+              className={`transition-transform duration-200 ${sortAsc ? 'rotate-180' : ''}`}
+            >
+              <path d="M2 4l4 4 4-4" stroke="#2c2c2c" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
       )}
 
       {/* List view */}
       {view === 'list' && (
-        <div className="flex-1 overflow-y-auto px-6 flex flex-col gap-3 pb-8">
-          {filteredNotes.length === 0 && (
+        <div
+          ref={listRef}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="flex-1 overflow-y-auto px-6 flex flex-col gap-3 pb-8"
+        >
+          {refreshing && (
+            <div className="flex justify-center py-2">
+              <div className="w-4 h-4 rounded-full border-2 border-almost-pink/30 border-t-almost-pink animate-spin" />
+            </div>
+          )}
+          {!refreshing && filteredNotes.length === 0 && (
             <p className="font-sans text-[#5d5d5d] text-[16px]">Nothing found.</p>
           )}
           {filteredNotes.map(note => {

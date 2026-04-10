@@ -20,10 +20,10 @@ export default function LandingScreen({ onNext, onSkip }: { onNext: () => void; 
 
   return (
     <div className="relative flex flex-col h-full overflow-hidden" style={{ background: '#bcbcbc' }}>
-      {process.env.NODE_ENV === 'development' && onSkip && (
+      {onSkip && (
         <button
           onClick={onSkip}
-          className="absolute top-3 left-1/2 -translate-x-1/2 z-50 w-10 h-10 opacity-0"
+          className="absolute top-3 left-1/2 -translate-x-1/2 z-50 w-20 h-20 opacity-0"
           aria-label="Skip to app"
         />
       )}

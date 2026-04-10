@@ -29,15 +29,17 @@ export default function MyNoteDetailScreen({ notes, initialNoteId, onBack, onVie
 
   return (
     <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
-      <div className="flex flex-col h-full">
 
-        {/* Header */}
-        <div className="px-6 pt-8 flex items-center">
-          <button onClick={onBack} className="flex items-center gap-3 transition-opacity hover:opacity-70">
-            <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
-          </button>
-        </div>
+      {/* Header */}
+      <div className="px-6 pt-8 flex items-center shrink-0">
+        <button onClick={onBack} className="flex items-center gap-3 transition-opacity hover:opacity-70">
+          <img src="/Back icon.svg" alt="" width={20} height={11} />
+          <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
+        </button>
+      </div>
+
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto">
 
         {/* Human date heading */}
         <div className="px-6 mt-8 mb-1">
@@ -92,12 +94,10 @@ export default function MyNoteDetailScreen({ notes, initialNoteId, onBack, onVie
         )}
 
         {/* Note card */}
-        <div className="flex-1 mx-6 bg-white rounded-xl p-4 flex flex-col justify-between overflow-hidden">
-          <div className="flex-1 overflow-y-auto">
-            <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
-              {note.text}
-            </p>
-          </div>
+        <div className="mx-6 bg-white rounded-xl p-4">
+          <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
+            {note.text}
+          </p>
           <div className="flex items-center gap-1.5 pt-3 min-w-0">
             <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
               {note.venue.name}

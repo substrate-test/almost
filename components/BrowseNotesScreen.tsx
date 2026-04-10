@@ -87,13 +87,12 @@ export default function BrowseNotesScreen({ venue, initialNoteId, notes: notesPr
 
   const note = notes[index]
   const remaining = msLeft(note)
-  const isExpiringSoon = remaining < 2 * 3600 * 1000
 
   return (
     <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
-      <div className="flex flex-col h-full">
+
       {/* Header */}
-      <div className="px-6 pt-8 flex items-center justify-between">
+      <div className="px-6 pt-8 flex items-center justify-between shrink-0">
         <button
           onClick={onBack}
           className="flex items-center gap-3 transition-opacity hover:opacity-70"
@@ -103,41 +102,43 @@ export default function BrowseNotesScreen({ venue, initialNoteId, notes: notesPr
         </button>
       </div>
 
-      {/* Human date heading */}
-      <div className="px-6 mt-8 mb-1">
-        <h1 className="font-mono text-[#2c2c2c]" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
-          {humanWhen(note.datetime)}
-        </h1>
-      </div>
+      {/* Scrollable content + buttons */}
+      <div className="flex-1 overflow-y-auto">
 
-      {/* Pagination + arrows */}
-      <div className="px-6 mt-4 mb-3 flex items-center justify-between">
-        <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest">
-          Note {index + 1}/{notes.length}
-        </span>
-        {notes.length > 1 && (
-          <div className="flex gap-4">
-            <button
-              onClick={() => setIndex(i => Math.max(0, i - 1))}
-              disabled={index === 0}
-              className="transition-opacity disabled:opacity-25 hover:opacity-60"
-            >
-              <img src="/Back icon.svg" alt="" width={20} height={11} />
-            </button>
-            <button
-              onClick={() => setIndex(i => Math.min(notes.length - 1, i + 1))}
-              disabled={index === notes.length - 1}
-              className="transition-opacity disabled:opacity-25 hover:opacity-60"
-            >
-              <img src="/Back icon.svg" alt="" width={20} height={11} className="rotate-180" />
-            </button>
-          </div>
-        )}
-      </div>
+        {/* Human date heading */}
+        <div className="px-6 mt-8 mb-1">
+          <h1 className="font-mono text-[#2c2c2c]" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+            {humanWhen(note.datetime)}
+          </h1>
+        </div>
 
-      {/* Note card */}
-      <div className="flex-1 mx-6 bg-white rounded-xl p-4 flex flex-col justify-between overflow-hidden">
-        <div className="flex-1 overflow-y-auto">
+        {/* Pagination + arrows */}
+        <div className="px-6 mt-4 mb-3 flex items-center justify-between">
+          <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest">
+            Note {index + 1}/{notes.length}
+          </span>
+          {notes.length > 1 && (
+            <div className="flex gap-4">
+              <button
+                onClick={() => setIndex(i => Math.max(0, i - 1))}
+                disabled={index === 0}
+                className="transition-opacity disabled:opacity-25 hover:opacity-60"
+              >
+                <img src="/Back icon.svg" alt="" width={20} height={11} />
+              </button>
+              <button
+                onClick={() => setIndex(i => Math.min(notes.length - 1, i + 1))}
+                disabled={index === notes.length - 1}
+                className="transition-opacity disabled:opacity-25 hover:opacity-60"
+              >
+                <img src="/Back icon.svg" alt="" width={20} height={11} className="rotate-180" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Note card */}
+        <div className="mx-6 bg-white rounded-xl p-4">
           {note.mine && (
             <span className="inline-block bg-almost-pink rounded px-2 py-1 font-sans text-[12px] text-white mb-3">
               My note
@@ -146,54 +147,54 @@ export default function BrowseNotesScreen({ venue, initialNoteId, notes: notesPr
           <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
             {note.text}
           </p>
+          <div className="flex items-center gap-1.5 pt-3 min-w-0">
+            <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
+              {note.venue.name}
+            </span>
+            <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] shrink-0">
+              {formatDate(note.datetime)}
+            </span>
+            <span className={`font-sans text-[12px] shrink-0 ml-auto tabular-nums ${remaining < 3600000 ? 'text-almost-pink' : 'text-[#FE0155]'}`}>
+              {formatCountdown(remaining)}
+            </span>
+          </div>
         </div>
-        <div className="flex items-center gap-1.5 pt-3 min-w-0">
-<span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] truncate min-w-0">
-            {note.venue.name}
-          </span>
-          <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] shrink-0">
-            {formatDate(note.datetime)}
-          </span>
-          <span className={`font-sans text-[12px] shrink-0 ml-auto tabular-nums ${remaining < 3600000 ? 'text-almost-pink' : 'text-[#FE0155]'}`}>
-            {formatCountdown(remaining)}
-          </span>
-        </div>
-      </div>
 
-      {/* CTA */}
-      <div className="px-6 pb-8 pt-4 flex flex-col gap-3">
-        {note.mine ? (
-          <>
-            <button
-              onClick={() => onViewMyNote?.(note)}
-              className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
-            >
-              View my note
-            </button>
-            <ShareButton note={note} />
-          </>
-        ) : context === 'browse' ? (
-          <>
-            <button
-              onClick={() => onRespond(note)}
-              className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
-            >
-              Write back
-            </button>
-            <ShareButton note={note} />
-          </>
-        ) : (
-          <>
-            <ShareButton note={note} primary />
-            <button
-              onClick={() => onRespond(note)}
-              className="w-full py-2 font-sans text-[15px] text-[#9d9d9d] text-center transition-opacity hover:opacity-60 active:opacity-40"
-            >
-              Write back
-            </button>
-          </>
-        )}
-      </div>
+        {/* CTA */}
+        <div className="px-6 pb-8 pt-4 flex flex-col gap-3">
+          {note.mine ? (
+            <>
+              <button
+                onClick={() => onViewMyNote?.(note)}
+                className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
+              >
+                View my note
+              </button>
+              <ShareButton note={note} />
+            </>
+          ) : context === 'browse' ? (
+            <>
+              <button
+                onClick={() => onRespond(note)}
+                className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
+              >
+                Write back
+              </button>
+              <ShareButton note={note} />
+            </>
+          ) : (
+            <>
+              <ShareButton note={note} primary />
+              <button
+                onClick={() => onRespond(note)}
+                className="w-full py-2 font-sans text-[15px] text-[#9d9d9d] text-center transition-opacity hover:opacity-60 active:opacity-40"
+              >
+                Write back
+              </button>
+            </>
+          )}
+        </div>
+
       </div>
     </div>
   )

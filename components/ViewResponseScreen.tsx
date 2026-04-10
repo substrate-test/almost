@@ -29,15 +29,17 @@ export default function ViewResponseScreen({ note, responses, onBack, onOpenChat
 
   return (
     <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
-      <div className="flex flex-col h-full px-6">
 
-        {/* Header */}
-        <div className="pt-8 flex items-center">
-          <button onClick={onBack} className="flex items-center gap-3 transition-opacity hover:opacity-70">
-            <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
-          </button>
-        </div>
+      {/* Header */}
+      <div className="px-6 pt-8 flex items-center shrink-0">
+        <button onClick={onBack} className="flex items-center gap-3 transition-opacity hover:opacity-70">
+          <img src="/Back icon.svg" alt="" width={20} height={11} />
+          <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
+        </button>
+      </div>
+
+      {/* Scrollable content + buttons */}
+      <div className="flex-1 overflow-y-auto px-6">
 
         <h1 className="font-mono text-[#2c2c2c] mt-14 mb-2" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
           They wrote back
@@ -115,12 +117,10 @@ export default function ViewResponseScreen({ note, responses, onBack, onOpenChat
         </div>
 
         {/* Reply card */}
-        <div className="flex-1 bg-white rounded-xl p-4 flex flex-col justify-between overflow-hidden">
-          <div className="flex-1 overflow-y-auto">
-            <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
-              {response.text}
-            </p>
-          </div>
+        <div className="bg-white rounded-xl p-4">
+          <p className="font-sans text-[20px] text-[#2c2c2c] leading-[1.6] whitespace-pre-wrap">
+            {response.text}
+          </p>
           <div className="flex items-center gap-1.5 pt-3 min-w-0">
             <span className="bg-[#efefef] rounded px-2 py-1 font-sans text-[12px] text-[#2c2c2c] shrink-0">
               {timeAgo(response.respondedAt)}

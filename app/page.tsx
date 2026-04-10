@@ -60,7 +60,7 @@ export default function App() {
   const showMenu = !ONBOARDING.includes(screen) && screen !== 'notifications' && screen !== 'settings'
 
   return (
-    <main className="fixed inset-0 flex items-center justify-center bg-almost-bg">
+    <main className="fixed inset-0 flex items-center justify-center bg-almost-bg" style={{ height: '100dvh' }}>
       <div className="relative w-full max-w-[430px] h-full overflow-hidden">
 
         {/* Landing always visible behind auth steps */}
@@ -70,7 +70,7 @@ export default function App() {
 
         {/* Auth bottom sheet */}
         {screen !== 'landing' && ONBOARDING.includes(screen) && (
-          <div className="absolute inset-x-0 bottom-0 z-50 animate-sheet-up" style={{ height: '55%' }}>
+          <div className="absolute inset-x-0 bottom-0 z-50 animate-sheet-up" style={{ height: '66%' }}>
             <div className="h-full bg-[#f7f5f6] rounded-t-3xl shadow-2xl overflow-hidden flex flex-col">
               {screen === 'register-auth' && (
                 <RegisterAuthScreen key={screenKey} onDone={() => navigate('register-name')} onSkip={() => navigate('choice')} />

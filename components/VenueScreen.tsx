@@ -18,7 +18,6 @@ const MAP_STYLES = [
 
 const POPULAR_IDS = ['7', '1', '25']
 
-// Venue card radio — grey ring, pink inner dot when selected
 function RadioDot({ selected }: { selected: boolean }) {
   return (
     <div className="w-[25px] h-[25px] rounded-full border border-[#c8c8c8] bg-white flex items-center justify-center shrink-0">
@@ -26,7 +25,6 @@ function RadioDot({ selected }: { selected: boolean }) {
     </div>
   )
 }
-
 
 interface Props {
   onBack: () => void
@@ -64,68 +62,55 @@ export default function VenueScreen({ onBack, onNext }: Props) {
       <div className="flex flex-col h-full px-[calc(8.33%+2px)]">
 
         {/* Header */}
-        <div className="pt-[37px] flex items-center">
+        <div className="pt-[37px] flex items-center shrink-0">
           <button
             onClick={onBack}
             className="flex items-center gap-3 transition-opacity hover:opacity-60 active:opacity-40"
           >
             <img src="/Back icon.svg" alt="" width={20} height={11} />
-            
           </button>
         </div>
 
-        {/* Heading */}
-        <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest mt-14 mb-2">1 / 3</span>
-        <h1
-          className="font-mono text-[#2c2c2c] mb-3"
-          style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}
-        >
-          Where did it happen?
-        </h1>
-        <p className="font-sans text-[#2c2c2c] text-[16px] leading-[1.2] mb-5">
-          Live right now across a handful of London's finest — more coming soon.
-        </p>
-
-        {/* List / Map toggle */}
-        <div className="flex items-center gap-6 mb-4">
-          <button
-            onClick={() => setView('list')}
-            className="flex items-center gap-2"
-          >
-            <RadioDot selected={view === 'list'} />
-            <span className="font-sans text-[#2c2c2c] text-[16px]">List</span>
-          </button>
-          {apiKey && (
-            <button
-              onClick={() => setView('map')}
-              className="flex items-center gap-2"
-            >
-              <RadioDot selected={view === 'map'} />
-              <span className="font-sans text-[#2c2c2c] text-[16px]">Map</span>
-            </button>
-          )}
-        </div>
-
-        {/* Search bar */}
-        {view === 'list' && (
-          <div className="bg-white rounded-xl px-4 py-[15px] flex items-center gap-3 mb-5">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <circle cx="7.5" cy="7.5" r="6" stroke="#7b7b7b" strokeWidth="1.4" />
-              <path d="M13 13L16 16" stroke="#7b7b7b" strokeWidth="1.4" strokeLinecap="round" />
-            </svg>
-            <input
-              type="text"
-              value={query}
-              onChange={e => { setQuery(e.target.value); setSelected(null) }}
-              placeholder="Search venues"
-              className="flex-1 bg-transparent font-sans text-[16px] text-[#2c2c2c] placeholder:text-[#7b7b7b]"
-            />
-          </div>
-        )}
-
-        {/* List view */}
+        {/* List view — fully scrollable */}
         {view === 'list' && (
           <div className="flex-1 overflow-y-auto">
+            <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest mt-14 block mb-2">1 / 3</span>
+            <h1 className="font-mono text-[#2c2c2c] mb-3" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+              Where did it happen?
+            </h1>
+            <p className="font-sans text-[#2c2c2c] text-[16px] leading-[1.2] mb-5">
+              Live right now across a handful of London's finest — more coming soon.
+            </p>
+
+            {/* List / Map toggle */}
+            <div className="flex items-center gap-6 mb-4">
+              <button onClick={() => setView('list')} className="flex items-center gap-2">
+                <RadioDot selected={view === 'list'} />
+                <span className="font-sans text-[#2c2c2c] text-[16px]">List</span>
+              </button>
+              {apiKey && (
+                <button onClick={() => setView('map')} className="flex items-center gap-2">
+                  <RadioDot selected={view === 'map'} />
+                  <span className="font-sans text-[#2c2c2c] text-[16px]">Map</span>
+                </button>
+              )}
+            </div>
+
+            {/* Search bar */}
+            <div className="bg-white rounded-xl px-4 py-[15px] flex items-center gap-3 mb-5">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="7.5" cy="7.5" r="6" stroke="#7b7b7b" strokeWidth="1.4" />
+                <path d="M13 13L16 16" stroke="#7b7b7b" strokeWidth="1.4" strokeLinecap="round" />
+              </svg>
+              <input
+                type="text"
+                value={query}
+                onChange={e => { setQuery(e.target.value); setSelected(null) }}
+                placeholder="Search venues"
+                className="flex-1 bg-transparent font-sans text-[16px] text-[#2c2c2c] placeholder:text-[#7b7b7b]"
+              />
+            </div>
+
             <p className="font-sans text-[#7b7b7b] text-[16px] leading-[1.2] mb-3">{listLabel}</p>
             <div className="flex flex-col gap-3">
               {listVenues.length === 0 && query.trim() && (
@@ -163,6 +148,23 @@ export default function VenueScreen({ onBack, onNext }: Props) {
         {/* Map view */}
         {view === 'map' && (
           <div className="flex-1 flex flex-col gap-3 overflow-hidden">
+            {/* Heading + toggle shown above map */}
+            <div>
+              <span className="font-sans text-[#9d9d9d] text-[13px] uppercase tracking-widest mt-8 block mb-2">1 / 3</span>
+              <h1 className="font-mono text-[#2c2c2c] mb-3" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+                Where did it happen?
+              </h1>
+              <div className="flex items-center gap-6 mb-4">
+                <button onClick={() => setView('list')} className="flex items-center gap-2">
+                  <RadioDot selected={view === 'list'} />
+                  <span className="font-sans text-[#2c2c2c] text-[16px]">List</span>
+                </button>
+                <button onClick={() => setView('map')} className="flex items-center gap-2">
+                  <RadioDot selected={view === 'map'} />
+                  <span className="font-sans text-[#2c2c2c] text-[16px]">Map</span>
+                </button>
+              </div>
+            </div>
             <div className="flex-1 rounded-xl overflow-hidden">
               {isLoaded ? (
                 <GoogleMap

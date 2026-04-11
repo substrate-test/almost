@@ -49,39 +49,34 @@ export default function OnboardingScreen({ mode, onBack, onDone }: Props) {
           </button>
         </div>
 
-        {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto">
+        {/* Heading — fills space, pushes cards to bottom */}
+        <div className="flex-1 flex items-center">
+          <h1 className="font-mono text-[#2c2c2c]" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
+            <Typewriter text={HEADINGS[mode]} speed={90} orbCursor />
+          </h1>
+        </div>
 
-          {/* Hero heading */}
-          <div className="flex items-center mt-14 mb-8">
-            <h1 className="font-mono text-[#2c2c2c]" style={{ fontSize: 'clamp(30px, 8vw, 36px)', lineHeight: 1.15 }}>
-              <Typewriter text={HEADINGS[mode]} speed={90} orbCursor />
-            </h1>
-          </div>
-
-          {/* Step cards */}
-          <div className="flex flex-col gap-3">
-            {steps.map((step, i) => (
-              <div key={i} className="bg-white p-4 rounded-xl">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="font-mono font-bold text-almost-pink text-[20px] leading-none">{i + 1}.</span>
-                  <h2 className="font-sans text-[#2c2c2c] text-[20px] leading-tight">{step.heading}</h2>
-                </div>
-                <p className="font-sans text-[#5d5d5d] text-[16px] leading-[1.2]">{step.body}</p>
+        {/* Step cards */}
+        <div className="flex flex-col gap-3">
+          {steps.map((step, i) => (
+            <div key={i} className="bg-white p-4 rounded-xl">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-mono font-bold text-almost-pink text-[20px] leading-none">{i + 1}.</span>
+                <h2 className="font-sans text-[#2c2c2c] text-[20px] leading-tight">{step.heading}</h2>
               </div>
-            ))}
-          </div>
+              <p className="font-sans text-[#5d5d5d] text-[16px] leading-[1.2]">{step.body}</p>
+            </div>
+          ))}
+        </div>
 
-          {/* CTA */}
-          <div className="pt-4 pb-8">
-            <button
-              onClick={onDone}
-              className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
-            >
-              {CTAS[mode]}
-            </button>
-          </div>
-
+        {/* CTA */}
+        <div className="pt-4 pb-8 shrink-0">
+          <button
+            onClick={onDone}
+            className="w-full py-[15px] bg-almost-pink text-white font-sans text-[16px] text-center transition-opacity hover:opacity-90 active:opacity-80 rounded-full"
+          >
+            {CTAS[mode]}
+          </button>
         </div>
 
       </div>

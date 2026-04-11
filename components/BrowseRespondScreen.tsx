@@ -36,7 +36,7 @@ export default function BrowseRespondScreen({ note, onBack, onSent }: Props) {
             className="flex items-center gap-3 transition-opacity hover:opacity-70"
           >
             <img src="/Back icon.svg" alt="" width={20} height={11} />
-            <span className="font-sans text-[#2c2c2c] text-[15px] uppercase tracking-wide relative top-[1px]">Back</span>
+            
           </button>
         </div>
 

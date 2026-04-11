@@ -60,7 +60,7 @@ export default function BrowseNotesScreen({ venue, initialNoteId, notes: notesPr
     return (
       <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
         <div className="flex flex-col h-full px-6">
-        <div className="pt-8 pb-[60px] flex items-center">
+        <div className="pt-[37px] pb-[60px] flex items-center">
           <button
             onClick={onBack}
             className="flex items-center gap-3 transition-opacity hover:opacity-70"
@@ -92,7 +92,7 @@ export default function BrowseNotesScreen({ venue, initialNoteId, notes: notesPr
     <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
 
       {/* Header */}
-      <div className="px-6 pt-8 flex items-center justify-between shrink-0">
+      <div className="px-6 pt-[37px] flex items-center justify-between shrink-0">
         <button
           onClick={onBack}
           className="flex items-center gap-3 transition-opacity hover:opacity-70"

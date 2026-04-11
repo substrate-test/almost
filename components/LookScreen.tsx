@@ -108,7 +108,7 @@ export default function LookScreen({ onBack, onSelect }: Props) {
   return (
     <div className="flex flex-col h-full animate-screen-in" style={{ background: '#f7f5f6' }}>
       {/* Header */}
-      <div className="px-6 pt-8 flex items-center">
+      <div className="px-6 pt-[37px] flex items-center">
         <button onClick={onBack} className="flex items-center gap-3 transition-opacity hover:opacity-70">
           <img src="/Back icon.svg" alt="" width={20} height={11} />
           

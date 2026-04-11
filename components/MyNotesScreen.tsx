@@ -58,7 +58,7 @@ export default function MyNotesScreen({ onSelect, onBack }: Props) {
   return (
     <div className="flex flex-col h-full overflow-hidden" style={{ background: '#f7f5f6' }}>
       <div className="flex flex-col h-full px-6 overflow-y-auto">
-        <div className="pt-8 flex items-center justify-between">
+        <div className="pt-[37px] flex items-center justify-between">
           <button onClick={onBack} className="flex items-center gap-3 transition-opacity hover:opacity-70">
             <img src="/Back icon.svg" alt="" width={20} height={11} />
             

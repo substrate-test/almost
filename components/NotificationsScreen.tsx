@@ -79,7 +79,7 @@ export default function NotificationsScreen({ onClose, onViewResponse }: { onClo
   return (
     <div className="flex flex-col h-full" style={{ background: '#f7f5f6' }}>
       <div className="flex flex-col h-full px-6">
-        <div className="pt-8 flex items-center justify-between">
+        <div className="pt-[37px] flex items-center justify-between">
           <button onClick={onClose} className="flex items-center gap-3 transition-opacity hover:opacity-70">
             <img src="/Back icon.svg" alt="" width={20} height={11} />
             

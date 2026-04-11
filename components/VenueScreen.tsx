@@ -64,7 +64,7 @@ export default function VenueScreen({ onBack, onNext }: Props) {
       <div className="flex flex-col h-full px-[calc(8.33%+2px)]">
 
         {/* Header */}
-        <div className="pt-8 flex items-center">
+        <div className="pt-[37px] flex items-center">
           <button
             onClick={onBack}
             className="flex items-center gap-3 transition-opacity hover:opacity-60 active:opacity-40"

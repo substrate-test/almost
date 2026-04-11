@@ -173,7 +173,7 @@ export default function BrowseVenueScreen({ onBack, onNext }: Props) {
         {view === 'list' && (
           <div className="flex-1 overflow-y-auto">
             <p className="font-sans text-[#7b7b7b] text-[16px] leading-[1.2] mb-3">{listLabel}</p>
-            <div className="flex flex-col gap-3 pb-4">
+            <div className="flex flex-col gap-3">
               {listVenues.length === 0 && query.trim() && (
                 <p className="font-sans text-[#7b7b7b] text-[16px]">No venues found.</p>
               )}
@@ -195,6 +195,16 @@ export default function BrowseVenueScreen({ onBack, onNext }: Props) {
                   <RadioDot selected={selected?.id === venue.id} />
                 </button>
               ))}
+            </div>
+            <div className="pb-8 pt-4">
+              <button
+                onClick={() => selected && onNext(selected)}
+                disabled={!selected}
+                className="w-full py-[15px] font-sans text-[16px] text-white text-center transition-all duration-200 disabled:cursor-not-allowed active:opacity-80 rounded-full"
+                style={{ background: selected ? '#FE0155' : '#a0a0a0' }}
+              >
+                Peek inside
+              </button>
             </div>
           </div>
         )}
@@ -242,20 +252,18 @@ export default function BrowseVenueScreen({ onBack, onNext }: Props) {
                 <RadioDot selected />
               </div>
             )}
+            <div className="pb-8 shrink-0">
+              <button
+                onClick={() => selected && onNext(selected)}
+                disabled={!selected}
+                className="w-full py-[15px] font-sans text-[16px] text-white text-center transition-all duration-200 disabled:cursor-not-allowed active:opacity-80 rounded-full"
+                style={{ background: selected ? '#FE0155' : '#a0a0a0' }}
+              >
+                Peek inside
+              </button>
+            </div>
           </div>
         )}
-
-        {/* Continue */}
-        <div className="pb-8 pt-4 shrink-0">
-          <button
-            onClick={() => selected && onNext(selected)}
-            disabled={!selected}
-            className="w-full py-[15px] font-sans text-[16px] text-white text-center transition-all duration-200 disabled:cursor-not-allowed active:opacity-80 rounded-full"
-            style={{ background: selected ? '#FE0155' : '#a0a0a0' }}
-          >
-            Peek inside
-          </button>
-        </div>
 
       </div>
     </div>

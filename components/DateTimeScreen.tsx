@@ -224,7 +224,7 @@ export default function DateTimeScreen({ onBack, onNext }: Props) {
         </p>
 
         {/* Quick picks */}
-        <div className="space-y-3 pb-6">
+        <div className="space-y-3 pb-4">
           {QUICK_PICKS.map((pick) => {
             const isActive = selected === pick.id
             return (
@@ -256,27 +256,18 @@ export default function DateTimeScreen({ onBack, onNext }: Props) {
             )
           })}
         </div>
-      </div>
 
-      {/* Continue — always visible at bottom */}
-      <div className="pb-8 pt-4">
-        <button
-          onClick={handleContinue}
-          disabled={!canContinue}
-          className="
-            w-full py-[15px]
-            font-sans text-[16px] text-center text-white
-            transition-all duration-200
-            disabled:cursor-not-allowed
-            active:opacity-80 rounded-full
-          "
-          style={{
-            background: canContinue ? '#FE0155' : '#a0a0a0',
-          }}
-        >
-          Continue
-        </button>
-      </div>
+        {/* Continue */}
+        <div className="pb-8 pt-4">
+          <button
+            onClick={handleContinue}
+            disabled={!canContinue}
+            className="w-full py-[15px] font-sans text-[16px] text-center text-white transition-all duration-200 disabled:cursor-not-allowed active:opacity-80 rounded-full"
+            style={{ background: canContinue ? '#FE0155' : '#a0a0a0' }}
+          >
+            Continue
+          </button>
+        </div>
       </div>
     </div>
   )

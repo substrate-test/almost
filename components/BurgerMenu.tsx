@@ -50,7 +50,7 @@ export default function BurgerMenu({ onHome, onLeave, onFind, onLook, onNotifica
       {/* Burger — top right, with pink dot if notifications */}
       <button
         onClick={() => setOpen(o => !o)}
-        className="absolute top-[37px] right-6 z-50 transition-opacity hover:opacity-60"
+        className="absolute top-[34px] right-6 z-50 transition-opacity hover:opacity-60"
         aria-label={open ? 'Close menu' : 'Open menu'}
       >
         {open ? (

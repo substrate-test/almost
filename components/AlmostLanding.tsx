@@ -42,10 +42,18 @@ export default function AlmostLanding() {
   const [endsAt] = useState(() => NOTE_DURATIONS_MS.map(d => Date.now() + d));
   const [countdowns, setCountdowns] = useState(() => NOTE_DURATIONS_MS.map(formatCountdown));
   const requestRef = useRef<number | null>(null);
+  const vwRef = useRef(1440);
+  const vhRef = useRef(810);
 
-  const W = 1440, H = 810;
   const f1w = 159, f1h = 239;
   const f2w = 204, f2h = 240;
+
+  useEffect(() => {
+    const update = () => { vwRef.current = window.innerWidth; vhRef.current = window.innerHeight; };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
@@ -61,6 +69,7 @@ export default function AlmostLanding() {
 
   useEffect(() => {
     const animate = () => {
+      const W = vwRef.current, H = vhRef.current;
       setFace1((p) => {
         let x = p.x + p.vx, y = p.y + p.vy, vx = p.vx, vy = p.vy;
         if (x <= 0 || x + f1w >= W) { vx = -vx; x = x <= 0 ? 0 : W - f1w; }
@@ -95,8 +104,8 @@ export default function AlmostLanding() {
       overflowX: "hidden",
     }}>
 
-      {/* HERO — animation canvas, no own background */}
-      <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%", overflow: "hidden" }}>
+      {/* HERO — full viewport height, faces bounce to edges */}
+      <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
 
           {/* Logo — part of background, behind faces */}
@@ -128,23 +137,13 @@ export default function AlmostLanding() {
             No profiles.<br />No pictures.<br />Just real world chemistry.
           </div>
 
-          {/* Bouncing faces — in foreground */}
-          <div style={{
-            position: "absolute", inset: 0,
-            width: W, height: H,
-            transform: "scale(var(--hero-scale, 1))",
-            transformOrigin: "top left",
-            zIndex: 10,
-          }}>
+          {/* Bouncing faces — in foreground, positions in real viewport px */}
+          <div style={{ position: "absolute", inset: 0, zIndex: 10 }}>
             <img src="/imgGuy.png" alt="" style={{ position: "absolute", left: face1.x, top: face1.y, width: f1w, height: f1h, objectFit: "cover" }} />
             <img src="/imgGirl.png" alt="" style={{ position: "absolute", left: face2.x, top: face2.y, width: f2w, height: f2h, objectFit: "cover" }} />
           </div>
 
         </div>
-
-        <style>{`
-          @media (max-width: 1440px) { :root { --hero-scale: calc(100vw / 1440) } }
-        `}</style>
       </div>
 
       {/* NOTES */}
@@ -275,7 +274,7 @@ export default function AlmostLanding() {
       <footer style={{
         background: "#2c2c2c",
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "30px 40px",
+        padding: "45px 40px",
       }}>
         <svg viewBox="0 0 1144 167" fill="none" style={{ width: 148, height: 22, flexShrink: 0 }}>
           <path fillRule="evenodd" clipRule="evenodd" d={svgPath} fill="white" />
@@ -292,7 +291,7 @@ export default function AlmostLanding() {
           </svg>
         </div>
 
-        <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 12, color: "#f7f5f6", textAlign: "right" }}>
+        <div style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 10, color: "#BCBCBC", textAlign: "left" }}>
           <p style={{ margin: 0 }}>Substrate Studio Ltd.</p>
           <p style={{ margin: 0 }}>©️ 2026 All rights reserved</p>
         </div>

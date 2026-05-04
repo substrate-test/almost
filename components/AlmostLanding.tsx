@@ -28,7 +28,7 @@ export default function AlmostLanding() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [visible, setVisible] = useState(false);
-  const requestRef = useRef(null);
+  const requestRef = useRef<number | null>(null);
 
   const W = 1440, H = 810;
   const f1w = 180, f1h = 216;
@@ -56,7 +56,7 @@ export default function AlmostLanding() {
       requestRef.current = requestAnimationFrame(animate);
     };
     requestRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(requestRef.current);
+    return () => { if (requestRef.current) cancelAnimationFrame(requestRef.current); };
   }, []);
 
   const handleSubmit = (e) => {

@@ -134,7 +134,7 @@ export default function AlmostLanding() {
             opacity: visible ? 1 : 0,
             transition: "opacity 1.2s ease 0.4s",
           }}>
-            No profiles.<br />No pictures.<br />Just IRL chemistry.
+            No profiles.<br />No pictures.<br />Just real world chemistry.
           </div>
 
           {/* Bouncing faces — in foreground, positions in real viewport px */}

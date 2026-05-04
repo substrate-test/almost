@@ -121,7 +121,7 @@ export default function AlmostLanding() {
 
           {/* Subheader — part of background, behind faces, 30% smaller font, narrowed to wrap last line */}
           <div style={{
-            position: "absolute", top: "58%", left: "50%",
+            position: "absolute", top: "calc(58% + 30px)", left: "50%",
             transform: "translateX(-50%)",
             textAlign: "center", zIndex: 5,
             fontFamily: "'Courier New', Courier, monospace",

@@ -132,7 +132,7 @@ export default function AlmostLanding() {
 
           {/* Logo — part of background, behind faces */}
           <div style={{
-            position: "absolute", top: "42%", left: "50%",
+            position: "absolute", top: "50%", left: "50%",
             transform: "translate(-50%, -50%)",
             width: "60%", maxWidth: 700, zIndex: 5,
           }}>
@@ -156,7 +156,7 @@ export default function AlmostLanding() {
             opacity: visible ? 1 : 0,
             transition: "opacity 1.2s ease 0.4s",
           }}>
-            No profiles.<br />No pictures.<br />Just real world chemistry.
+            No profiles.<br />No pictures.<br />Just IRL chemistry.
           </div>
 
           {/* Bouncing faces — in foreground, positions in real viewport px */}

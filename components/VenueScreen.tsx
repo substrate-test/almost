@@ -85,12 +85,12 @@ export default function VenueScreen({ onBack, onNext }: Props) {
             {/* List / Map toggle */}
             <div className="flex items-center gap-6 mb-4">
               <button onClick={() => setView('list')} className="flex items-center gap-2">
-                <RadioDot selected={view === 'list'} />
+                <RadioDot selected={true} />
                 <span className="font-sans text-[#2c2c2c] text-[16px]">List</span>
               </button>
               {apiKey && (
                 <button onClick={() => setView('map')} className="flex items-center gap-2">
-                  <RadioDot selected={view === 'map'} />
+                  <RadioDot selected={false} />
                   <span className="font-sans text-[#2c2c2c] text-[16px]">Map</span>
                 </button>
               )}
@@ -156,11 +156,11 @@ export default function VenueScreen({ onBack, onNext }: Props) {
               </h1>
               <div className="flex items-center gap-6 mb-4">
                 <button onClick={() => setView('list')} className="flex items-center gap-2">
-                  <RadioDot selected={view === 'list'} />
+                  <RadioDot selected={false} />
                   <span className="font-sans text-[#2c2c2c] text-[16px]">List</span>
                 </button>
                 <button onClick={() => setView('map')} className="flex items-center gap-2">
-                  <RadioDot selected={view === 'map'} />
+                  <RadioDot selected={true} />
                   <span className="font-sans text-[#2c2c2c] text-[16px]">Map</span>
                 </button>
               </div>

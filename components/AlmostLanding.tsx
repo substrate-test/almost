@@ -40,11 +40,9 @@ export default function AlmostLanding() {
   const [face2, setFace2] = useState({ x: 980, y: 340, vx: -0.55, vy: 0.75 });
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
-  const [suggestions, setSuggestions] = useState<google.maps.places.AutocompletePrediction[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const autocompleteRef = useRef<google.maps.places.AutocompleteService | null>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const cityInputRef = useRef<HTMLInputElement>(null);
+  const autocompleteWidgetRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const { isLoaded: mapsLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "",
@@ -100,28 +98,17 @@ export default function AlmostLanding() {
     return () => { if (requestRef.current) cancelAnimationFrame(requestRef.current); };
   }, []);
 
-  const handleCityChange = (value: string) => {
-    setCity(value);
-    setShowSuggestions(true);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    if (!value.trim() || !mapsLoaded) { setSuggestions([]); return; }
-    debounceRef.current = setTimeout(() => {
-      if (!autocompleteRef.current) {
-        autocompleteRef.current = new google.maps.places.AutocompleteService();
-      }
-      autocompleteRef.current.getPlacePredictions(
-        { input: value, types: ["(cities)"] },
-        (preds) => setSuggestions(preds ?? [])
-      );
-    }, 250);
-  };
-
-  const handleCitySelect = (description: string) => {
-    const city = description.split(",")[0];
-    setCity(city);
-    setSuggestions([]);
-    setShowSuggestions(false);
-  };
+  useEffect(() => {
+    if (!mapsLoaded || !cityInputRef.current) return;
+    autocompleteWidgetRef.current = new google.maps.places.Autocomplete(cityInputRef.current, {
+      types: ["(cities)"],
+      fields: ["name"],
+    });
+    autocompleteWidgetRef.current.addListener("place_changed", () => {
+      const place = autocompleteWidgetRef.current?.getPlace();
+      if (place?.name) setCity(place.name);
+    });
+  }, [mapsLoaded]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -240,59 +227,26 @@ export default function AlmostLanding() {
         {!submitted ? (
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
-            {/* City — Places autocomplete */}
+            {/* City — Google Places Autocomplete widget */}
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <label style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 16, color: "#2c2c2c" }}>
                 Enter your city
               </label>
-              <div style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  value={city}
-                  onChange={(e) => handleCityChange(e.target.value)}
-                  onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-                  onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-                  placeholder="Your city"
-                  autoComplete="off"
-                  style={{
-                    background: "white", border: "none",
-                    borderRadius: showSuggestions && suggestions.length > 0 ? "12px 12px 0 0" : 12,
-                    padding: "0 16px", height: 50,
-                    fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 16, color: "#2c2c2c", width: "100%",
-                    outline: "none", boxSizing: "border-box",
-                  }}
-                />
-                {showSuggestions && suggestions.length > 0 && (
-                  <ul style={{
-                    position: "absolute", top: "100%", left: 0, right: 0,
-                    background: "white", borderRadius: "0 0 12px 12px",
-                    listStyle: "none", margin: 0, padding: 0,
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    zIndex: 100, overflow: "hidden",
-                  }}>
-                    {suggestions.map((s) => (
-                      <li
-                        key={s.place_id}
-                        onMouseDown={() => handleCitySelect(s.description)}
-                        style={{
-                          padding: "12px 16px",
-                          fontFamily: "system-ui, -apple-system, sans-serif",
-                          fontSize: 15, color: "#2c2c2c", cursor: "pointer",
-                          borderTop: "1px solid #f0f0f0",
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = "#f9f9f9")}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = "white")}
-                      >
-                        {s.structured_formatting.main_text}
-                        <span style={{ color: "#a0a0a0", fontSize: 13, marginLeft: 6 }}>
-                          {s.structured_formatting.secondary_text}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <input
+                ref={cityInputRef}
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="Your city"
+                autoComplete="off"
+                style={{
+                  background: "white", border: "none", borderRadius: 12,
+                  padding: "0 16px", height: 50,
+                  fontFamily: "system-ui, -apple-system, sans-serif",
+                  fontSize: 16, color: "#2c2c2c", width: "100%",
+                  outline: "none", boxSizing: "border-box",
+                }}
+              />
             </div>
 
             {/* Email field */}

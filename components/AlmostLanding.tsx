@@ -147,23 +147,23 @@ export default function AlmostLanding() {
       </div>
 
       {/* NOTES */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 40px 40px", boxSizing: "border-box" }}>
-        <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
+      <div style={{ maxWidth: 880, margin: "0 auto", padding: "48px 32px 32px", boxSizing: "border-box" }}>
+        <div style={{ display: "flex", gap: 26, alignItems: "flex-start" }}>
           {NOTES.map((note, i) => (
             <div key={i} style={{
               flex: 1,
               background: "white",
-              borderRadius: 12,
-              padding: 16,
+              borderRadius: 10,
+              padding: 13,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              minHeight: 402,
-              marginTop: i === 1 ? 83 : 0,
+              minHeight: 322,
+              marginTop: i === 1 ? 66 : 0,
             }}>
               <p style={{
                 fontFamily: "system-ui, -apple-system, sans-serif",
-                fontSize: 18,
+                fontSize: 14,
                 color: "#2c2c2c",
                 margin: 0,
                 lineHeight: 1.725,
@@ -171,16 +171,16 @@ export default function AlmostLanding() {
               }}>
                 &ldquo;{note.text}&rdquo;
               </p>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 16 }}>
-                <div style={{ display: "flex", gap: 4 }}>
-                  <span style={{ background: "#efefef", borderRadius: 4, padding: "4px 8px", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 12, color: "#2c2c2c" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 13 }}>
+                <div style={{ display: "flex", gap: 3 }}>
+                  <span style={{ background: "#efefef", borderRadius: 3, padding: "3px 6px", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 10, color: "#2c2c2c" }}>
                     {note.venue}
                   </span>
-                  <span style={{ background: "#efefef", borderRadius: 4, padding: "4px 8px", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 12, color: "#2c2c2c" }}>
+                  <span style={{ background: "#efefef", borderRadius: 3, padding: "3px 6px", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 10, color: "#2c2c2c" }}>
                     {note.date}
                   </span>
                 </div>
-                <span style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 12, color: "#ff0163", fontVariantNumeric: "tabular-nums" }}>
+                <span style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 10, color: "#ff0163", fontVariantNumeric: "tabular-nums" }}>
                   {countdowns[i]}
                 </span>
               </div>

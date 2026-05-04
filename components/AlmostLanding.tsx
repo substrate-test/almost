@@ -78,7 +78,7 @@ export default function AlmostLanding() {
           <img
             src="/Landing_Background.png"
             alt=""
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scaleY(-1)" }}
           />
 
           {/* Bouncing faces */}

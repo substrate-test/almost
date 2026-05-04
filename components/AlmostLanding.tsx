@@ -59,7 +59,7 @@ export default function AlmostLanding() {
     return () => { if (requestRef.current) cancelAnimationFrame(requestRef.current); };
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) setSubmitted(true);
   };

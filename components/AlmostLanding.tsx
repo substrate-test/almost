@@ -7,32 +7,35 @@ const svgPath = "M1102.62 39.1387H1143.3L1132.55 76.8376H1091.87L1083.55 105.665
 const NOTES = [
   {
     venue: "Fabric, London",
-    time: "Saturday, 2am",
+    date: "Sat 4 Aug",
+    time: "72:00:00",
     text: "You were at the bar on your own for a moment. Burgundy jacket. We caught eyes twice. I was going to come over and then my friends pulled me away. I thought about it the whole night.",
   },
   {
-    venue: "Soho House, Greek Street",
-    time: "Thursday, late",
+    venue: "Soho House",
+    date: "Sat 4 Aug",
+    time: "72:00:00",
     text: "You were reading something on your phone and laughing to yourself. Dark eyes. White shirt. You looked up once and I looked away like an idiot. If this is you — what were you reading?",
   },
   {
-    venue: "Victoria line, northbound",
-    time: "Friday, 11pm",
+    venue: "Victoria line",
+    date: "Sat 4 Aug",
+    time: "72:00:00",
     text: "You got on at Brixton. We stood next to each other the whole way to King's Cross. You smiled when the doors nearly closed on someone's bag. I got off one stop too early.",
   },
 ];
 
 export default function AlmostLanding() {
-  const [face1, setFace1] = useState({ x: 80, y: 80, vx: 0.7, vy: 0.5 });
-  const [face2, setFace2] = useState({ x: 520, y: 180, vx: -0.55, vy: 0.75 });
+  const [face1, setFace1] = useState({ x: 120, y: 60, vx: 0.7, vy: 0.5 });
+  const [face2, setFace2] = useState({ x: 980, y: 340, vx: -0.55, vy: 0.75 });
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [visible, setVisible] = useState(false);
   const requestRef = useRef<number | null>(null);
 
   const W = 1440, H = 810;
-  const f1w = 180, f1h = 216;
-  const f2w = 240, f2h = 288;
+  const f1w = 159, f1h = 239;
+  const f2w = 204, f2h = 240;
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
@@ -65,85 +68,146 @@ export default function AlmostLanding() {
   };
 
   return (
-    <div style={{ fontFamily: "'Courier New', Courier, monospace", background: "#0a0a0a", minHeight: "100vh", color: "#f5f0e8", overflowX: "hidden" }}>
+    <div style={{ background: "#b9b9b9", minHeight: "100vh", overflowX: "hidden" }}>
 
-      {/* HERO — animation */}
-      <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%", overflow: "hidden", background: "#0a0a0a" }}>
+      {/* HERO */}
+      <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          {/* Background */}
-          <img src="/Landing_Background.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.4 }} />
+
+          {/* Background image */}
+          <img
+            src="/Landing_Background.png"
+            alt=""
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+          />
 
           {/* Bouncing faces */}
-          <div style={{ position: "absolute", inset: 0, width: W, height: H, transform: "scale(var(--hero-scale, 1))", transformOrigin: "top left" }}>
-            <img src="/imgGuy.png" alt="" style={{ position: "absolute", left: face1.x, top: face1.y, width: f1w, height: f1h, objectFit: "cover", filter: "grayscale(20%)" }} />
-            <img src="/imgGirl.png" alt="" style={{ position: "absolute", left: face2.x, top: face2.y, width: f2w, height: f2h, objectFit: "cover", filter: "grayscale(20%)" }} />
+          <div style={{
+            position: "absolute", inset: 0,
+            width: W, height: H,
+            transform: "scale(var(--hero-scale, 1))",
+            transformOrigin: "top left",
+          }}>
+            <img src="/imgGuy.png" alt="" style={{ position: "absolute", left: face1.x, top: face1.y, width: f1w, height: f1h, objectFit: "cover" }} />
+            <img src="/imgGirl.png" alt="" style={{ position: "absolute", left: face2.x, top: face2.y, width: f2w, height: f2h, objectFit: "cover" }} />
           </div>
 
-          {/* Logo */}
-          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "60%", maxWidth: 700, zIndex: 10 }}>
-            <svg viewBox="0 0 1143.3 166.202" fill="none" style={{ width: "100%", display: "block" }}>
-              <path clipRule="evenodd" d={svgPath} fill="#FE0155" fillRule="evenodd" />
+          {/* Logo — white, centered */}
+          <div style={{
+            position: "absolute", top: "42%", left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%", maxWidth: 700, zIndex: 10,
+          }}>
+            <svg viewBox="0 0 1144 167" fill="none" style={{ width: "100%", display: "block" }}>
+              <path fillRule="evenodd" clipRule="evenodd" d={svgPath} fill="white" />
             </svg>
           </div>
 
-          {/* Headline */}
+          {/* Subheader — slightly below logo */}
           <div style={{
-            position: "absolute", bottom: "12%", left: "50%", transform: "translateX(-50%)",
-            textAlign: "center", zIndex: 10, whiteSpace: "nowrap",
-            fontSize: "clamp(14px, 2vw, 22px)", letterSpacing: "0.05em",
-            color: "#f5f0e8", textTransform: "uppercase", opacity: visible ? 1 : 0,
-            transition: "opacity 1.2s ease 0.4s"
+            position: "absolute", top: "57%", left: "50%",
+            transform: "translateX(-50%)",
+            textAlign: "center", zIndex: 10,
+            fontFamily: "'Courier New', Courier, monospace",
+            fontSize: "clamp(13px, 2vw, 32px)",
+            color: "#2c2c2c",
+            lineHeight: 1.2,
+            whiteSpace: "nowrap",
+            opacity: visible ? 1 : 0,
+            transition: "opacity 1.2s ease 0.4s",
           }}>
-            For the one that almost got away
+            No profiles.<br />No pictures.<br />Just real world chemistry.
           </div>
+
         </div>
 
-        {/* Hero scale fix */}
         <style>{`
-          @media (max-width: 1440px) {
-            :root { --hero-scale: calc(100vw / 1440) }
-          }
+          @media (max-width: 1440px) { :root { --hero-scale: calc(100vw / 1440) } }
         `}</style>
       </div>
 
       {/* NOTES */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 40px 60px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32 }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 40px 40px", boxSizing: "border-box" }}>
+        <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
           {NOTES.map((note, i) => (
             <div key={i} style={{
-              border: "1px solid rgba(245,240,232,0.12)",
-              padding: "28px 28px 24px",
-              background: "rgba(245,240,232,0.03)",
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: `opacity 0.8s ease ${0.6 + i * 0.15}s, transform 0.8s ease ${0.6 + i * 0.15}s`
+              flex: 1,
+              background: "white",
+              borderRadius: 12,
+              padding: 16,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              minHeight: 402,
+              marginTop: i === 1 ? 83 : 0,
             }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16, fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.5 }}>
-                <span>{note.venue}</span>
-                <span>{note.time}</span>
-              </div>
-              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7, color: "#f5f0e8", opacity: 0.85 }}>{note.text}</p>
-              <div style={{ marginTop: 20, borderTop: "1px solid rgba(245,240,232,0.08)", paddingTop: 16 }}>
-                <span style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#FE0155", cursor: "pointer" }}>Make your move →</span>
+              <p style={{
+                fontFamily: "system-ui, -apple-system, sans-serif",
+                fontSize: 20,
+                color: "#2c2c2c",
+                margin: 0,
+                lineHeight: "normal",
+                flex: 1,
+              }}>
+                &ldquo;{note.text}&rdquo;
+              </p>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 16 }}>
+                <div style={{ display: "flex", gap: 4 }}>
+                  <span style={{ background: "#efefef", borderRadius: 4, padding: "4px 8px", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 12, color: "#2c2c2c" }}>
+                    {note.venue}
+                  </span>
+                  <span style={{ background: "#efefef", borderRadius: 4, padding: "4px 8px", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 12, color: "#2c2c2c" }}>
+                    {note.date}
+                  </span>
+                </div>
+                <span style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 12, color: "#ff0163" }}>
+                  {note.time}
+                </span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* WAITLIST */}
-      <div style={{
-        maxWidth: 560, margin: "0 auto", padding: "20px 40px 100px",
-        textAlign: "center",
-        opacity: visible ? 1 : 0,
-        transition: "opacity 0.8s ease 1.1s"
-      }}>
+      {/* SIGN UP */}
+      <div style={{ maxWidth: 441, margin: "0 auto", padding: "60px 40px 80px", boxSizing: "border-box" }}>
+        <h2 style={{
+          fontFamily: "'Courier New', Courier, monospace",
+          fontSize: 32,
+          fontWeight: "normal",
+          color: "#2c2c2c",
+          textAlign: "center",
+          margin: "0 0 40px",
+        }}>
+          Almost is coming.
+        </h2>
+
         {!submitted ? (
-          <>
-            <p style={{ fontSize: 13, letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.45, marginBottom: 28 }}>
-              London launch — coming soon
-            </p>
-            <form onSubmit={handleSubmit} style={{ display: "flex", gap: 0, border: "1px solid rgba(245,240,232,0.2)" }}>
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 16, color: "#2c2c2c" }}>
+                Where should we open the doors?
+              </label>
+              <select style={{
+                background: "white", border: "none", borderRadius: 12,
+                padding: "0 16px", height: 50,
+                fontFamily: "system-ui, -apple-system, sans-serif",
+                fontSize: 16, color: "#a0a0a0", width: "100%",
+                appearance: "none", cursor: "pointer", outline: "none",
+              }}>
+                <option value="">Select your city</option>
+                <option value="london">London</option>
+                <option value="nyc">New York</option>
+                <option value="la">Los Angeles</option>
+                <option value="paris">Paris</option>
+                <option value="berlin">Berlin</option>
+              </select>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <label style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 16, color: "#2c2c2c" }}>
+                You&apos;ll be the first to know.
+              </label>
               <input
                 type="email"
                 placeholder="your@email.com"
@@ -151,29 +215,68 @@ export default function AlmostLanding() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 style={{
-                  flex: 1, padding: "14px 20px", background: "transparent",
-                  border: "none", outline: "none", color: "#f5f0e8",
-                  fontFamily: "'Courier New', Courier, monospace",
-                  fontSize: 14, letterSpacing: "0.05em"
+                  background: "white", border: "none", borderRadius: 12,
+                  padding: "0 16px", height: 50,
+                  fontFamily: "system-ui, -apple-system, sans-serif",
+                  fontSize: 16, color: "#2c2c2c", width: "100%",
+                  outline: "none", boxSizing: "border-box",
                 }}
               />
-              <button type="submit" style={{
-                padding: "14px 24px", background: "#FE0155", border: "none",
-                color: "#fff", fontFamily: "'Courier New', Courier, monospace",
-                fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase",
-                cursor: "pointer", whiteSpace: "nowrap"
-              }}>
-                Get early access
-              </button>
-            </form>
-          </>
+            </div>
+
+            <button type="submit" style={{
+              background: "#ff0163", border: "none", borderRadius: 50,
+              padding: "15px 25px", height: 50,
+              fontFamily: "system-ui, -apple-system, sans-serif",
+              fontSize: 16, color: "white", cursor: "pointer",
+              width: "fit-content",
+            }}>
+              Get early access
+            </button>
+          </form>
         ) : (
-          <div style={{ padding: "32px 0" }}>
-            <p style={{ fontSize: 18, lineHeight: 1.6, opacity: 0.9 }}>You're on the list.</p>
-            <p style={{ fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", opacity: 0.4, marginTop: 8 }}>We'll be in touch before launch.</p>
+          <div style={{ textAlign: "center", padding: "32px 0" }}>
+            <p style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 20, color: "#2c2c2c", margin: 0 }}>
+              You&apos;re on the list.
+            </p>
+            <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: 14, color: "#a0a0a0", marginTop: 8 }}>
+              We&apos;ll be in touch before launch.
+            </p>
           </div>
         )}
       </div>
+
+      {/* FOOTER */}
+      <footer style={{
+        background: "#2c2c2c",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "30px 40px",
+      }}>
+        <svg viewBox="0 0 1144 167" fill="none" style={{ width: 148, height: 22, flexShrink: 0 }}>
+          <path fillRule="evenodd" clipRule="evenodd" d={svgPath} fill="white" />
+        </svg>
+
+        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          {/* Instagram */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" strokeWidth="1.5" />
+            <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.5" />
+            <circle cx="17.5" cy="6.5" r="1" fill="white" />
+          </svg>
+          {/* TikTok */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z" />
+          </svg>
+        </div>
+
+        <div style={{
+          fontFamily: "system-ui, -apple-system, sans-serif",
+          fontSize: 12, color: "#f7f5f6", textAlign: "right",
+        }}>
+          <p style={{ margin: 0 }}>Substrate Studio Ltd.</p>
+          <p style={{ margin: 0 }}>©️ 2026 All rights reserved</p>
+        </div>
+      </footer>
 
     </div>
   );

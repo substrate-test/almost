@@ -200,7 +200,7 @@ export default function AlmostLanding() {
     <div style={{
       backgroundImage: "url('/Landing_Background.png')",
       backgroundSize: "cover",
-      backgroundPosition: "top center",
+      backgroundPosition: "bottom center",
       backgroundRepeat: "no-repeat",
       backgroundColor: "#b9b9b9",
       minHeight: "100vh",

@@ -59,8 +59,8 @@ export default function AlmostLanding() {
   const isMobileRef = useRef(false);
   const heroRef = useRef<HTMLDivElement | null>(null);
 
-  const f1w = isMobile ? 135 : 159, f1h = isMobile ? 203 : 239;
-  const f2w = isMobile ? 173 : 204, f2h = isMobile ? 204 : 240;
+  const f1w = isMobile ? 115 : 159, f1h = isMobile ? 173 : 239;
+  const f2w = isMobile ? 147 : 204, f2h = isMobile ? 173 : 240;
 
   useEffect(() => {
     const check = () => {
@@ -345,7 +345,7 @@ export default function AlmostLanding() {
           textAlign: "center",
           margin: "0 0 40px",
         }}>
-          {submitted ? "You\u2019re on the list." : "Almost is coming."}
+          {submitted ? "You\u2019re on the list." : "Sign up for early access"}
         </h2>
 
         {!submitted ? (
@@ -443,7 +443,7 @@ export default function AlmostLanding() {
               display: "flex", alignItems: "center", justifyContent: "center",
               lineHeight: 1,
             }}>
-              Get early access
+              Join the list
             </button>
           </form>
         ) : (

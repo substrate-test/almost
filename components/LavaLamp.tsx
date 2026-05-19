@@ -16,40 +16,34 @@ void main() {
   vec2 uv = gl_FragCoord.xy / u_res;
   float asp = u_res.x / u_res.y;
 
-  // 8 blobs — varied speeds and orbits
-  vec2 b[8];
-  b[0] = vec2(0.5 + 0.38*sin(u_time*0.37),        0.5 + 0.40*cos(u_time*0.31));
-  b[1] = vec2(0.5 + 0.42*cos(u_time*0.29 + 1.2),  0.3 + 0.28*sin(u_time*0.51 + 0.7));
-  b[2] = vec2(0.5 + 0.32*sin(u_time*0.58 + 2.1),  0.7 + 0.24*cos(u_time*0.43 + 1.5));
-  b[3] = vec2(0.2 + 0.18*cos(u_time*0.35 + 3.0),  0.5 + 0.42*sin(u_time*0.27 + 0.3));
-  b[4] = vec2(0.8 + 0.14*sin(u_time*0.46 + 0.8),  0.5 + 0.38*cos(u_time*0.33 + 2.2));
-  b[5] = vec2(0.5 + 0.28*cos(u_time*0.53 + 4.0),  0.15 + 0.13*sin(u_time*0.61 + 1.1));
-  b[6] = vec2(0.5 + 0.34*sin(u_time*0.41 + 2.5),  0.85 + 0.11*cos(u_time*0.48 + 3.3));
-  b[7] = vec2(0.35 + 0.22*cos(u_time*0.44 + 5.1), 0.5 + 0.30*sin(u_time*0.36 + 4.7));
+  // 2 blobs — slow, wide orbits
+  vec2 b[2];
+  b[0] = vec2(0.5 + 0.40*sin(u_time*0.14),       0.5 + 0.38*cos(u_time*0.11));
+  b[1] = vec2(0.5 + 0.38*cos(u_time*0.10 + 1.2), 0.5 + 0.35*sin(u_time*0.13 + 0.7));
 
   // Aspect-corrected UV
   vec2 uvA = vec2(uv.x * asp, uv.y);
 
   float field = 0.0;
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 2; i++) {
     vec2 bA = vec2(b[i].x * asp, b[i].y);
     float d2 = dot(uvA - bA, uvA - bA);
-    field += 0.013 / (d2 + 0.001);
+    field += 0.0373 / (d2 + 0.001);
   }
 
-  // Colours
-  vec3 bg    = vec3(0.109, 0.075, 0.094); // #1c1318 — base dark
-  vec3 mid   = vec3(0.45,  0.01,  0.20);  // deep magenta glow
-  vec3 hot   = vec3(0.996, 0.004, 0.333); // #FE0155 — full blob
+  // Colours — grey bg, pink blobs
+  vec3 bg  = vec3(0.725, 0.725, 0.725); // #B9B9B9
+  vec3 mid = vec3(0.85,  0.55,  0.65);  // warm blush transition
+  vec3 hot = vec3(0.996, 0.004, 0.333); // #FE0155
 
-  float t1 = smoothstep(0.5, 1.4, field);
-  float t2 = smoothstep(1.4, 3.2, field);
+  float t1 = smoothstep(0.4, 1.2, field);
+  float t2 = smoothstep(1.2, 2.8, field);
 
   vec3 col = mix(bg, mid, t1);
   col = mix(col, hot, t2);
 
-  // Ambient glow halo
-  col += hot * smoothstep(0.2, 0.7, field) * 0.18;
+  // Soft glow halo
+  col += hot * smoothstep(0.15, 0.55, field) * 0.12;
 
   gl_FragColor = vec4(col, 1.0);
 }

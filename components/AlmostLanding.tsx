@@ -489,7 +489,6 @@ export default function AlmostLanding() {
               </div>
             </div>
             <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 12, color: "#f7f5f6", lineHeight: 1.5 }}>
-              <p style={{ margin: 0 }}>Substrate Studio Ltd.</p>
               <p style={{ margin: 0 }}>©️ 2026 All rights reserved</p>
             </div>
           </>
@@ -500,7 +499,6 @@ export default function AlmostLanding() {
                 <path fillRule="evenodd" clipRule="evenodd" d={svgPath} fill="white" />
               </svg>
               <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: 12, color: "#f7f5f6", lineHeight: 1.5 }}>
-                <p style={{ margin: 0 }}>Substrate Studio Ltd.</p>
                 <p style={{ margin: 0 }}>©️ 2026 All rights reserved</p>
               </div>
             </div>
